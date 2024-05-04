@@ -379,54 +379,59 @@ class Statistics extends StatelessWidget {
           (item) => Container(
             width: ui.Size.fromWidth(MediaQuery.sizeOf(context).width * 0.19)
                 .width,
-            padding: EdgeInsets.symmetric(
+            margin: EdgeInsets.symmetric(
                 vertical: MediaQuery.sizeOf(context).height * 0.01),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white38,
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: MediaQuery.sizeOf(context).height * 0.01,
-                          left: MediaQuery.sizeOf(context).width * 0.01,
-                          child: Text(
-                            item.topic,
-                            textScaler: const TextScaler.linear(1.25),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+            decoration: BoxDecoration(
+              color: Colors.white38,
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Builder(
+              builder: (context) {
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Stack(
+                        fit: StackFit.passthrough,
+                        children: [
+                          Positioned(
+                            top: MediaQuery.sizeOf(context).height * 0.01,
+                            left: MediaQuery.sizeOf(context).width * 0.01,
+                            child: Text(
+                              item.topic,
+                              textScaler: const TextScaler.linear(1.25),
+                              style: const TextStyle(
+                                  color: Colors.white, fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                        Transform(
-                            transform: Matrix4.translationValues(
-                                MediaQuery.sizeOf(context).width * 0.01,
-                                MediaQuery.sizeOf(context).width * 0.035,
-                                0.0),
-                            child: item.stats),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Transform(
-                      transform: Matrix4.translationValues(
-                          0.0, MediaQuery.sizeOf(context).width * 0.011, 0.0),
-                      child: SfCircularChart(
-                        annotations: item.annotations,
-                        onCreateShader: item.shader,
-                        palette: item.palette,
-                        series: item.series,
+                          Transform(
+                              transform: Matrix4.translationValues(
+                                  MediaQuery.sizeOf(context).width * 0.01,
+                                  MediaQuery.sizeOf(context).width * 0.035,
+                                  0.0),
+                              child: item.stats),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    Expanded(
+                      child: Transform(
+                        transform: Matrix4.translationValues(
+                            0.0, MediaQuery.sizeOf(context).width * 0.011, 0.0),
+                        child: SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.08,
+                          child: SfCircularChart(
+                            annotations: item.annotations,
+                            onCreateShader: item.shader,
+                            palette: item.palette,
+                            series: item.series,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
             ),
           ),
         ),

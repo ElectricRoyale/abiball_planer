@@ -44,8 +44,9 @@ class MainLayoutState extends State<MainLayout> {
       color: Colors.white,
       child: Row(
         children: [
-          Padding(
+          Container(
             padding: const EdgeInsets.only(right: 5.0),
+            constraints: const BoxConstraints(maxWidth: 275.0),
             child: Drawer(
               width: MediaQuery.sizeOf(context).width * 0.17,
               surfaceTintColor: Colors.white,
@@ -65,6 +66,7 @@ class MainLayoutState extends State<MainLayout> {
                     height: MediaQuery.sizeOf(context).height * 0.15,
                     margin: EdgeInsets.zero,
                     padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(maxHeight: 125.0),
                     child: Row(
                       children: [
                         SizedBox(
@@ -104,15 +106,18 @@ class MainLayoutState extends State<MainLayout> {
                       ],
                     ),
                   ),
-                  ListTile(
-                    title: Text(
-                      'Patient Tools',
-                      textScaler: const TextScaler.linear(0.8),
-                      style: TextStyle(
-                        //fontFamily: 'Fantastic Paris',
-                        color: Colors.grey.shade700,
-                        fontWeight: FontWeight.bold,
-                        height: 1.0,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.01 + 4),
+                    child: ListTile(
+                      title: Text(
+                        'Patient Tools',
+                        textScaler: const TextScaler.linear(0.8),
+                        style: TextStyle(
+                          //fontFamily: 'Fantastic Paris',
+                          color: Colors.grey.shade700,
+                          fontWeight: FontWeight.bold,
+                          height: 1.0,
+                        ),
                       ),
                     ),
                   ),

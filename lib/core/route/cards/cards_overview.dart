@@ -18,7 +18,8 @@ class CardsOverview extends StatelessWidget {
 
   InputDecoration decoration(bool showSuffix) {
     return InputDecoration(
-      border: InputBorder.none,
+      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75), borderRadius: BorderRadius.circular(10.0)),
+      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75), borderRadius: BorderRadius.circular(10.0)),
       contentPadding: const EdgeInsets.all(7.0),
       hintText: 'Search for Name',
       prefixIcon: const Icon(
@@ -77,11 +78,6 @@ class CardsOverview extends StatelessWidget {
                   height: MediaQuery.sizeOf(context).height * 0.065,
                   margin: EdgeInsets.only(
                       right: MediaQuery.sizeOf(context).width * 0.03),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border:
-                          Border.all(color: Colors.grey.shade300, width: 0.75)),
-                  clipBehavior: Clip.antiAlias,
                   child: AutoCompleteTextField<TicketDocument>(
                     decoration: decoration(false),
                     onFocusChanged: (focus) =>
@@ -146,7 +142,6 @@ class CardsOverview extends StatelessWidget {
               child: Focus(
                 focusNode: focusNode..requestFocus(),
                 autofocus: true,
-                onFocusChange: (t) => print(t),
                 child: Container(
                   margin: const EdgeInsets.fromLTRB(20.0, 3.0, 20.0, 16.0),
                   decoration: BoxDecoration(
