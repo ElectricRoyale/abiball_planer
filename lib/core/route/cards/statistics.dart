@@ -114,7 +114,6 @@ class Statistics extends StatelessWidget {
       GridItem(
         'Geld:',
         Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -212,7 +211,6 @@ class Statistics extends StatelessWidget {
       GridItem(
         'Karten:',
         Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -287,7 +285,6 @@ class Statistics extends StatelessWidget {
       GridItem(
         'Essen:',
         Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -411,7 +408,7 @@ class Statistics extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            flex: 1,
+                            flex: 3,
                             child: Container(
                               height: double.infinity,
                               alignment: AlignmentDirectional.centerStart,
@@ -424,7 +421,7 @@ class Statistics extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(flex: 3, child: item.stats),
+                          Expanded(flex: 4, child: item.stats),
                         ],
                       ),
                     ),
