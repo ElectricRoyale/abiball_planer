@@ -173,51 +173,178 @@ class CardsOverview extends StatelessWidget {
                                 flex: 7,
                                 child: InkWell(
                                   onTap: () {
+                                    String direction =
+                                        ManagerProvider.of(context).direction;
+                                    if (ManagerProvider.of(context).sortBy !=
+                                            'firstname' &&
+                                        ManagerProvider.of(context).sortBy !=
+                                            'lastname') {
+                                      direction = 'asc';
+                                    }
+                                    if (ManagerProvider.of(context).sortBy ==
+                                        'lastname') {
+                                      direction = ManagerProvider.of(context)
+                                                  .direction ==
+                                              'asc'
+                                          ? 'desc'
+                                          : 'asc';
+                                    }
                                     ManagerProvider.of(context).sort(
                                         ManagerProvider.of(context).sortBy ==
                                                 'firstname'
                                             ? 'lastname'
-                                            : 'firstnames');
+                                            : 'firstname',
+                                        direction);
                                   },
                                   child: Row(
                                     children: [
                                       const Text('Name',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                        color: ManagerProvider.of(context)
-                                                        .sortBy ==
-                                                    'firstname' ||
+                                      ManagerProvider.of(context).sortBy ==
+                                                  'firstname' ||
+                                              ManagerProvider.of(context)
+                                                      .sortBy ==
+                                                  'lastname'
+                                          ? Icon(
+                                              ManagerProvider.of(context)
+                                                          .direction ==
+                                                      'asc'
+                                                  ? Icons
+                                                      .keyboard_arrow_down_rounded
+                                                  : Icons
+                                                      .keyboard_arrow_up_rounded,
+                                              color: Colors.black,
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 8,
+                                child: InkWell(
+                                  onTap: () {
+                                    ManagerProvider.of(context).sort(
+                                        'neighbourWish',
+                                        ManagerProvider.of(context).direction ==
+                                                    'asc' &&
                                                 ManagerProvider.of(context)
                                                         .sortBy ==
-                                                    'lastname'
-                                            ? Colors.black
-                                            : Colors.transparent,
+                                                    'neighbourWish'
+                                            ? 'desc'
+                                            : 'asc');
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text('Sitznachbar wunsch',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      ManagerProvider.of(context).sortBy ==
+                                              'neighbourWish'
+                                          ? Icon(
+                                              ManagerProvider.of(context)
+                                                          .direction ==
+                                                      'asc'
+                                                  ? Icons
+                                                      .keyboard_arrow_down_rounded
+                                                  : Icons
+                                                      .keyboard_arrow_up_rounded,
+                                              color: Colors.black,
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: InkWell(
+                                  onTap: () {
+                                    ManagerProvider.of(context).sort(
+                                        'placeNumber',
+                                        ManagerProvider.of(context).direction ==
+                                                    'asc' &&
+                                                ManagerProvider.of(context)
+                                                        .sortBy ==
+                                                    'placeNumber'
+                                            ? 'desc'
+                                            : 'asc');
+                                  },
+                                  child: Row(
+                                    //mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          'Sitzplatz',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: ManagerProvider.of(context)
+                                                    .sortBy ==
+                                                'placeNumber'
+                                            ? Icon(
+                                                ManagerProvider.of(context)
+                                                            .direction ==
+                                                        'asc'
+                                                    ? Icons
+                                                        .keyboard_arrow_down_rounded
+                                                    : Icons
+                                                        .keyboard_arrow_up_rounded,
+                                                color: Colors.black,
+                                              )
+                                            : Container(
+                                                width: 0,
+                                              ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                              const Expanded(
-                                flex: 8,
-                                child: Text('Sitznachbar wünsche',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                              ),
-                              const Expanded(
-                                flex: 2,
-                                child: Text('Sitzplatz',
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                              ),
-                              const Expanded(
+                              Expanded(
                                 flex: 3,
-                                child: Text('Hart-/Karten ',
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
+                                child: InkWell(
+                                  onTap: () {
+                                    ManagerProvider.of(context).sort(
+                                        'cards',
+                                        ManagerProvider.of(context).direction ==
+                                                    'asc' &&
+                                                ManagerProvider.of(context)
+                                                        .sortBy ==
+                                                    'cards'
+                                            ? 'desc'
+                                            : 'asc');
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text('Hart-/Karten',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                          overflow: TextOverflow.ellipsis),
+                                      ManagerProvider.of(context).sortBy ==
+                                              'cards'
+                                          ? Icon(
+                                              ManagerProvider.of(context)
+                                                          .direction ==
+                                                      'asc'
+                                                  ? Icons
+                                                      .keyboard_arrow_down_rounded
+                                                  : Icons
+                                                      .keyboard_arrow_up_rounded,
+                                              color: Colors.black,
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                ),
                               ),
                               const Expanded(
                                 flex: 2,
@@ -227,29 +354,34 @@ class CardsOverview extends StatelessWidget {
                                 flex: 3,
                                 child: InkWell(
                                   onTap: () {
-                                    /* sortNames = false;
-                                      updateManagerProvider.of(context).tickets();*/
+                                    ManagerProvider.of(context).sort(
+                                        'payed',
+                                        ManagerProvider.of(context).direction ==
+                                                    'asc' &&
+                                                ManagerProvider.of(context)
+                                                        .sortBy ==
+                                                    'payed'
+                                            ? 'desc'
+                                            : 'asc');
                                   },
                                   child: Row(
+                                    mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                0.01,
+                                      Icon(
+                                        ManagerProvider.of(context).direction ==
+                                                'asc'
+                                            ? Icons.keyboard_arrow_down_rounded
+                                            : Icons.keyboard_arrow_up_rounded,
+                                        color: ManagerProvider.of(context)
+                                                    .sortBy ==
+                                                'payed'
+                                            ? Colors.black
+                                            : Colors.transparent,
                                       ),
-                                      const Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                        color: Colors
-                                            .transparent, /*sortNames
-                                              ? Colors.transparent
-                                              : Colors.black,*/
-                                      ),
-                                      const Text(
-                                        'Bezahlt',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                      const Text('Bezahlt',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
                                     ],
                                   ),
                                 ),

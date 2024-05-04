@@ -5,7 +5,7 @@ class StateManager with ChangeNotifier {
   List<TicketDocument> tickets = [];
   List<TicketDocument> viewTickets = [];
   String? searchValue;
-  String sortBy = 'name';
+  String sortBy = 'firstname', direction = 'asc';
 
   void addAll(List data) {
     tickets.clear();
@@ -75,7 +75,53 @@ class StateManager with ChangeNotifier {
     notifyListeners();
   }
 
-  void sort(String sortBy) {}
+  void sort(String sortBy, String direction) {
+    this.sortBy = sortBy;
+    this.direction = direction;
+    switch (sortBy) {
+      case 'firstname':
+        viewTickets.sort((a, b) => a.firstname.compareTo(b.firstname));
+        if (direction == 'desc') {
+          viewTickets = viewTickets.reversed.toList();
+        }
+        break;
+      case 'lastname':
+        viewTickets.sort((a, b) => a.lastname.compareTo(b.lastname));
+        if (direction == 'desc') {
+          viewTickets = viewTickets.reversed.toList();
+        }
+        break;
+      case 'neighbourWish':
+        viewTickets.sort((a, b) =>
+            (a.neighbourWish ?? '--').compareTo(b.neighbourWish ?? '--'));
+        if (direction == 'desc') {
+          viewTickets = viewTickets.reversed.toList();
+        }
+        break;
+      case 'placeNumber':
+        viewTickets.sort(
+            (a, b) => (a.placeNumber ?? '--').compareTo(b.placeNumber ?? '--'));
+        if (direction == 'desc') {
+          viewTickets = viewTickets.reversed.toList();
+        }
+        break;
+      case 'cards':
+        viewTickets
+            .sort((a, b) => a.numberOfTickets > b.numberOfTickets ? 1 : 0);
+        if (direction == 'desc') {
+          viewTickets.reversed;
+        }
+        break;
+      case 'payed':
+        viewTickets
+            .sort((a, b) => (a.payed == b.payed ? 0 : (a.payed ? 1 : -1)));
+        if (direction == 'desc') {
+          viewTickets = viewTickets.reversed.toList();
+        }
+        break;
+    }
+    notifyListeners();
+  }
 
   void delete(Map visitor) {
     tickets.removeWhere((item) =>
