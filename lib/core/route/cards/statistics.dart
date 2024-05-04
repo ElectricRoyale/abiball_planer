@@ -2,7 +2,9 @@ import 'dart:ui' as ui;
 
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -111,72 +113,77 @@ class Statistics extends StatelessWidget {
     gridItems.addAll([
       GridItem(
         'Geld:',
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
+        Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Ausgaben: ',
-                textScaler: TextScaler.linear(0.9),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Ausgaben: ',
+                    textScaler: TextScaler.linear(0.9),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    intl.NumberFormat.currency(locale: 'eu', symbol: '€')
+                        .format(minMoney(soldCards(documents))),
+                    textScaler: const TextScaler.linear(0.9),
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                intl.NumberFormat.currency(locale: 'eu', symbol: '€')
-                    .format(minMoney(soldCards(documents))),
-                textScaler: const TextScaler.linear(0.9),
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Einnahmen: ',
+                    textScaler: TextScaler.linear(0.9),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    intl.NumberFormat.currency(locale: 'eu', symbol: '€')
+                        .format(money(documents)),
+                    style: TextStyle(
+                        color:
+                            money(documents) >= minMoney(soldCards(documents))
+                                ? Colors.green
+                                : Colors.red),
+                    textScaler: const TextScaler.linear(0.9),
+                  ),
+                ],
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Einnahmen: ',
-                textScaler: TextScaler.linear(0.9),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Differenz: ',
+                    textScaler: TextScaler.linear(0.9),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    '${(money(documents) - minMoney(soldCards(documents))) > 0 ? "+" : ""}${intl.NumberFormat.currency(locale: 'eu', symbol: '€', decimalDigits: 0).format(money(documents) - minMoney(soldCards(documents)))}',
+                    style: TextStyle(
+                        color:
+                            money(documents) >= minMoney(soldCards(documents))
+                                ? const Color.fromARGB(255, 151, 255, 0)
+                                : Colors.red),
+                    textScaler: const TextScaler.linear(0.9),
+                  ),
+                ],
               ),
-              Text(
-                intl.NumberFormat.currency(locale: 'eu', symbol: '€')
-                    .format(money(documents)),
-                style: TextStyle(
-                    color: money(documents) >= minMoney(soldCards(documents))
-                        ? Colors.green
-                        : Colors.red),
-                textScaler: const TextScaler.linear(0.9),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Differenz: ',
-                textScaler: TextScaler.linear(0.9),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                '${(money(documents) - minMoney(soldCards(documents))) > 0 ? "+" : ""}${intl.NumberFormat.currency(locale: 'eu', symbol: '€', decimalDigits: 0).format(money(documents) - minMoney(soldCards(documents)))}',
-                style: TextStyle(
-                    color: money(documents) >= minMoney(soldCards(documents))
-                        ? const Color.fromARGB(255, 151, 255, 0)
-                        : Colors.red),
-                textScaler: const TextScaler.linear(0.9),
-              ),
-            ],
-          ),
-        ]),
+            ]),
         _getMoneySeries(),
         annotations: <CircularChartAnnotation>[
           CircularChartAnnotation(
@@ -204,46 +211,49 @@ class Statistics extends StatelessWidget {
       ),
       GridItem(
         'Karten:',
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
+        Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Insgesamt: ',
-                textScaler: TextScaler.linear(0.9),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Insgesamt: ',
+                    textScaler: TextScaler.linear(0.9),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    soldCards(documents).toString(),
+                    style: TextStyle(
+                        color: soldCards(documents) <= 599
+                            ? const Color.fromARGB(255, 122, 227, 0)
+                            : (soldCards(documents) > 599 &&
+                                    soldCards(documents) < 728)
+                                ? Colors.orange
+                                : Colors.red),
+                    textScaler: const TextScaler.linear(0.9),
+                  ),
+                  const Text(
+                    '/728',
+                    textScaler: TextScaler.linear(0.9),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
               Text(
-                soldCards(documents).toString(),
-                style: TextStyle(
-                    color: soldCards(documents) <= 599
-                        ? const Color.fromARGB(255, 122, 227, 0)
-                        : (soldCards(documents) > 599 &&
-                                soldCards(documents) < 728)
-                            ? Colors.orange
-                            : Colors.red),
+                'Hartkarten: ${hardCards(documents)}',
                 textScaler: const TextScaler.linear(0.9),
-              ),
-              const Text(
-                '/728',
-                textScaler: TextScaler.linear(0.9),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                 ),
-              ),
-            ],
-          ),
-          Text(
-            'Hartkarten: ${hardCards(documents)}',
-            textScaler: const TextScaler.linear(0.9),
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          )
-        ]),
+              )
+            ]),
         _getRadialBarGradientSeries(),
         annotations: <CircularChartAnnotation>[
           CircularChartAnnotation(
@@ -276,29 +286,32 @@ class Statistics extends StatelessWidget {
       ),
       GridItem(
         'Essen:',
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            'Fleisch: ${meatAmount(documents)}',
-            textScaler: const TextScaler.linear(0.9),
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          Text(
-            'Vegetarisch: ${vegetarianAmount(documents)}',
-            textScaler: const TextScaler.linear(0.9),
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          Text(
-            'Vegan: ${veganAmount(documents)}',
-            textScaler: const TextScaler.linear(0.9),
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ]),
+        Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Fleisch: ${meatAmount(documents)}',
+                textScaler: const TextScaler.linear(0.9),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'Vegetarisch: ${vegetarianAmount(documents)}',
+                textScaler: const TextScaler.linear(0.9),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'Vegan: ${veganAmount(documents)}',
+                textScaler: const TextScaler.linear(0.9),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ]),
         _getPieSeries(),
         palette: palletColors,
       ),
@@ -334,108 +347,105 @@ class Statistics extends StatelessWidget {
               color: Colors.blue)
         ],
       ),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        Container(
-          width: MediaQuery.sizeOf(context).width * 0.16,
-          margin: EdgeInsets.only(
-              left: MediaQuery.sizeOf(context).width * 0.01,
-              right: MediaQuery.sizeOf(context).width * 0.00),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Display all important Ticket data:',
-                textScaler: TextScaler.linear(1.3),
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.02,
-              ),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width * 0.08,
-                child: TextButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Adjust the border radius as needed
+      child: Builder(builder: (context) {
+        return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          Container(
+            width: MediaQuery.sizeOf(context).width * 0.16,
+            margin: EdgeInsets.only(
+                left: MediaQuery.sizeOf(context).width * 0.01,
+                right: MediaQuery.sizeOf(context).width * 0.00),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Display all important Ticket data:',
+                  textScaler: TextScaler.linear(1.3),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.02,
+                ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.08,
+                  child: TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Adjust the border radius as needed
+                          ),
                         ),
                       ),
-                    ),
-                    child: const Text(
-                      'Display',
-                      style: TextStyle(color: Color(0xFF237FEA)),
-                    )),
-              )
-            ],
-          ),
-        ),
-        ...gridItems.map(
-          (item) => Container(
-            width: ui.Size.fromWidth(MediaQuery.sizeOf(context).width * 0.19)
-                .width,
-            margin: EdgeInsets.symmetric(
-                vertical: MediaQuery.sizeOf(context).height * 0.01),
-            decoration: BoxDecoration(
-              color: Colors.white38,
-              borderRadius: BorderRadius.circular(16.0),
+                      child: const Text(
+                        'Display',
+                        style: TextStyle(color: Color(0xFF237FEA)),
+                      )),
+                )
+              ],
             ),
-            child: Builder(
-              builder: (context) {
+          ),
+          ...gridItems.map(
+            (item) => Container(
+              width: ui.Size.fromWidth(MediaQuery.sizeOf(context).width * 0.19)
+                  .width,
+              margin: EdgeInsets.symmetric(
+                  vertical: MediaQuery.sizeOf(context).height * 0.01),
+              padding: EdgeInsets.only(
+                  left: MediaQuery.sizeOf(context).height * 0.01),
+              decoration: BoxDecoration(
+                color: Colors.white38,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: LayoutBuilder(builder: (context, constraints) {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Expanded(
                       flex: 2,
-                      child: Stack(
-                        fit: StackFit.passthrough,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Positioned(
-                            top: MediaQuery.sizeOf(context).height * 0.01,
-                            left: MediaQuery.sizeOf(context).width * 0.01,
-                            child: Text(
-                              item.topic,
-                              textScaler: const TextScaler.linear(1.25),
-                              style: const TextStyle(
-                                  color: Colors.white, fontWeight: FontWeight.bold),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: double.infinity,
+                              alignment: AlignmentDirectional.centerStart,
+                              child: Text(
+                                item.topic,
+                                textScaler: const TextScaler.linear(1.25),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
-                          Transform(
-                              transform: Matrix4.translationValues(
-                                  MediaQuery.sizeOf(context).width * 0.01,
-                                  MediaQuery.sizeOf(context).width * 0.035,
-                                  0.0),
-                              child: item.stats),
+                          Expanded(flex: 3, child: item.stats),
                         ],
                       ),
                     ),
                     Expanded(
-                      child: Transform(
-                        transform: Matrix4.translationValues(
-                            0.0, MediaQuery.sizeOf(context).width * 0.011, 0.0),
-                        child: SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.08,
-                          child: SfCircularChart(
-                            annotations: item.annotations,
-                            onCreateShader: item.shader,
-                            palette: item.palette,
-                            series: item.series,
-                          ),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 114.0),
+                        child: SfCircularChart(
+                          annotations: item.annotations,
+                          onCreateShader: item.shader,
+                          palette: item.palette,
+                          series: item.series,
                         ),
                       ),
                     ),
                   ],
                 );
-              }
+              }),
             ),
           ),
-        ),
-      ]),
+        ]);
+      }),
     );
   }
 }
