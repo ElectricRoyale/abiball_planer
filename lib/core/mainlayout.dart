@@ -32,7 +32,7 @@ class MainLayoutState extends State<MainLayout> {
 
   @override
   void dispose() {
-    RealtimeDataService().close();
+    //RealtimeDataService().close();
     focusNode.dispose();
     super.dispose();
   }

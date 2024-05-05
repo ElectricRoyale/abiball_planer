@@ -95,12 +95,11 @@ class _EditDialogLayoutState extends State<EditDialogLayout> {
         scrolledUnderElevation: 0.0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.018),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.6,
               child: SingleChildScrollView(
                 child: Column(children: [
                   TextField(
@@ -132,7 +131,7 @@ class _EditDialogLayoutState extends State<EditDialogLayout> {
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.018),
                   TextField(
                     controller: emailController,
                     decoration: InputDecoration(
@@ -162,7 +161,7 @@ class _EditDialogLayoutState extends State<EditDialogLayout> {
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.018),
                   TextField(
                     controller: neighbourWishController,
                     decoration: InputDecoration(
@@ -186,7 +185,7 @@ class _EditDialogLayoutState extends State<EditDialogLayout> {
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.027),
                   Row(
                     children: [
                       Expanded(flex: 1, child: Container()),
@@ -268,8 +267,8 @@ class _EditDialogLayoutState extends State<EditDialogLayout> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 20,
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.018
                             ),
                             Row(
                               children: [
@@ -382,7 +381,7 @@ class _EditDialogLayoutState extends State<EditDialogLayout> {
                       Expanded(flex: 2, child: Container()),
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.027),
                   Row(
                     children: [
                       Expanded(
@@ -472,7 +471,7 @@ class _EditDialogLayoutState extends State<EditDialogLayout> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.022),
                   const Align(
                     widthFactor: 9,
                     alignment: Alignment.centerLeft,

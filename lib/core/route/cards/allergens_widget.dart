@@ -93,7 +93,7 @@ class AllergensWidgetState extends State<AllergensWidget> {
         ...allergens,
         TextButton(
             onPressed: () => setState(() => allergens
-                .add(addAllergens(Allergy(1, ''), allergens.length - 1))),
+                .add(addAllergens(Allergy(1, ''), allergens.isEmpty ? 0 : allergens.length - 1))),
             child: const Text('+ Hinzufügen')),
       ],
     );

@@ -34,36 +34,36 @@ class CardsOverview extends StatelessWidget {
     );
   }
 
-  Widget addDialog(BuildContext context) => ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1350.0),
-        child: Dialog(
-          clipBehavior: Clip.hardEdge,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.15,
-              vertical: MediaQuery.of(context).size.height * 0.1),
-          child: AddDialogLayout(
+  Widget addDialog(BuildContext context) => Dialog(
+    clipBehavior: Clip.hardEdge,
+    shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+    insetPadding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.15,
+        vertical: MediaQuery.of(context).size.height * 0.1),
+    child: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
+      child: AddDialogLayout(
             soldCards(ManagerProvider.of(context).tickets),
           ),
-        ),
-      );
+    ),
+  );
 
-  Widget editDialog(BuildContext context, int index) => ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1350.0),
-        child: Dialog(
-          clipBehavior: Clip.hardEdge,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.15,
-              vertical: MediaQuery.of(context).size.height * 0.1),
-          child: EditDialogLayout(
+  Widget editDialog(BuildContext context, int index) => Dialog(
+    clipBehavior: Clip.hardEdge,
+    shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+    insetPadding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.15,
+            vertical: MediaQuery.of(context).size.height * 0.1),
+    child: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
+      child: EditDialogLayout(
             soldCards(ManagerProvider.of(context).viewTickets),
             ManagerProvider.of(context).viewTickets.elementAt(index),
           ),
-        ),
-      );
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
