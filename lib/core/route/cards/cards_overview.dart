@@ -18,8 +18,12 @@ class CardsOverview extends StatelessWidget {
 
   InputDecoration decoration(bool showSuffix) {
     return InputDecoration(
-      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75), borderRadius: BorderRadius.circular(10.0)),
-      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75), borderRadius: BorderRadius.circular(10.0)),
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75),
+          borderRadius: BorderRadius.circular(10.0)),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75),
+          borderRadius: BorderRadius.circular(10.0)),
       contentPadding: const EdgeInsets.all(7.0),
       hintText: 'Search for Name',
       prefixIcon: const Icon(
@@ -30,15 +34,36 @@ class CardsOverview extends StatelessWidget {
     );
   }
 
-  Widget addDialog(BuildContext context) {
-    return Dialog(
-        clipBehavior: Clip.hardEdge,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        insetPadding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.15,
-            vertical: MediaQuery.of(context).size.height * 0.1),
-        child: AddDialogLayout(soldCards(ManagerProvider.of(context).tickets)));
-  }
+  Widget addDialog(BuildContext context) => ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1350.0),
+        child: Dialog(
+          clipBehavior: Clip.hardEdge,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.15,
+              vertical: MediaQuery.of(context).size.height * 0.1),
+          child: AddDialogLayout(
+            soldCards(ManagerProvider.of(context).tickets),
+          ),
+        ),
+      );
+
+  Widget editDialog(BuildContext context, int index) => ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1350.0),
+        child: Dialog(
+          clipBehavior: Clip.hardEdge,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          insetPadding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.15,
+              vertical: MediaQuery.of(context).size.height * 0.1),
+          child: EditDialogLayout(
+            soldCards(ManagerProvider.of(context).viewTickets),
+            ManagerProvider.of(context).viewTickets.elementAt(index),
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -416,26 +441,8 @@ class CardsOverview extends StatelessWidget {
                                       }),
                                       onTap: () => showDialog(
                                           context: context,
-                                          builder: (builder) => Dialog(
-                                              clipBehavior: Clip.hardEdge,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30)),
-                                              insetPadding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.15,
-                                                  vertical:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.1),
-                                              child: EditDialogLayout(
-                                                  soldCards(ManagerProvider.of(context).viewTickets),
-                                                  ManagerProvider.of(context).viewTickets.elementAt(index)))),
+                                          builder: (builder) =>
+                                              editDialog(context, index)),
                                       child: Padding(
                                         padding:
                                             const EdgeInsets.only(left: 8.0),
