@@ -1,5 +1,4 @@
 import 'package:abiball_planer/core/mainlayout.dart';
-import 'package:abiball_planer/core/service/websocketService.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -10,7 +9,7 @@ void main() async {
     await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
     await windowManager.show(); //Finally show app window.
   });
-  RealtimeDataService();
+  windowManager.RealtimeDataService();
   runApp(const MyApp());
 }
 

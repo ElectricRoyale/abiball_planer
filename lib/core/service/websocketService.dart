@@ -44,14 +44,18 @@ class RealtimeDataService {
               showDialog(
                 context: context!,
                 builder: (BuildContext context) => AlertDialog(
-                  backgroundColor: Colors.white,
-                  title: const Row(
+                  surfaceTintColor: Colors.white,
+                  title: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.error,
                         color: Colors.red,
                       ),
-                      Text('Insert error!'),
+                      SizedBox(width: MediaQuery.sizeOf(context).width * 0.01),
+                      const Text(
+                        'Insert error!',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ],
                   ),
                   titleTextStyle: const TextStyle(fontWeight: FontWeight.bold),
