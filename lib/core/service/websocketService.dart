@@ -21,7 +21,7 @@ class RealtimeDataService {
   BuildContext? context;
 
   final _channel =
-      WebSocketChannel.connect(Uri.parse("ws://192.168.0.131:8000/ws"));
+      WebSocketChannel.connect(Uri.parse("ws://192.168.0.59:8000/ws"));
 
   void initializeWebsocketService() {
     _channel.stream.listen((data) {

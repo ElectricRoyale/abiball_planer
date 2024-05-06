@@ -281,80 +281,82 @@ class MainLayoutState extends State<MainLayout> {
             ),
           ),
           Expanded(
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () => WindowManager.instance.minimize(),
-                    icon: const Icon(Icons.minimize_rounded),
-                    iconSize: 16,
-                    hoverColor: Colors.grey.shade300,
-                    constraints: const BoxConstraints(minWidth: 48),
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(8.0), // Round corners
-                        ),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async => (isMaximized =
-                            await WindowManager.instance.isMaximized())
-                        ? WindowManager.instance.unmaximize()
-                        : WindowManager.instance.maximize(),
-                    icon: !isMaximized
-                        ? const Icon(Icons.photo_size_select_small_rounded)
-                        : const Icon(Icons.check_box_outline_blank_rounded),
-                    iconSize: 16,
-                    hoverColor: Colors.grey.shade300,
-                    constraints: const BoxConstraints(minWidth: 48),
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(8.0), // Round corners
-                        ),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () => WindowManager.instance.close(),
-                    icon: const Icon(Icons.close),
-                    iconSize: 16,
-                    hoverColor: Colors.red,
-                    constraints: const BoxConstraints(minWidth: 48),
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(8.0), // Round corners
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: PageView(
-                  controller: controller,
-                  onPageChanged: (index) =>
-                      setState(() => selectedPage = index),
+            child: DragToMoveArea(
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(),
-                    Container(),
-                    ManagerProvider(
-                      notifier: stateManager,
-                      child: CardsOverview(focusNode),
+                    IconButton(
+                      onPressed: () => WindowManager.instance.minimize(),
+                      icon: const Icon(Icons.minimize_rounded),
+                      iconSize: 16,
+                      hoverColor: Colors.grey.shade300,
+                      constraints: const BoxConstraints(minWidth: 48),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(8.0), // Round corners
+                          ),
+                        ),
+                      ),
                     ),
-                    Container(),
-                    const EmailView(),
+                    IconButton(
+                      onPressed: () async => (isMaximized =
+                              await WindowManager.instance.isMaximized())
+                          ? WindowManager.instance.unmaximize()
+                          : WindowManager.instance.maximize(),
+                      icon: !isMaximized
+                          ? const Icon(Icons.photo_size_select_small_rounded)
+                          : const Icon(Icons.check_box_outline_blank_rounded),
+                      iconSize: 16,
+                      hoverColor: Colors.grey.shade300,
+                      constraints: const BoxConstraints(minWidth: 48),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(8.0), // Round corners
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => WindowManager.instance.close(),
+                      icon: const Icon(Icons.close),
+                      iconSize: 16,
+                      hoverColor: Colors.red,
+                      constraints: const BoxConstraints(minWidth: 48),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(8.0), // Round corners
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ]),
+                Expanded(
+                  child: PageView(
+                    controller: controller,
+                    onPageChanged: (index) =>
+                        setState(() => selectedPage = index),
+                    children: [
+                      Container(),
+                      Container(),
+                      ManagerProvider(
+                        notifier: stateManager,
+                        child: CardsOverview(focusNode),
+                      ),
+                      Container(),
+                      const EmailView(),
+                    ],
+                  ),
+                ),
+              ]),
+            ),
           ),
         ],
       ),

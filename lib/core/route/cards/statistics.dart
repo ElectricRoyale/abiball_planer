@@ -1,10 +1,9 @@
 import 'dart:ui' as ui;
 
+import 'package:abiball_planer/core/route/cards/info_dialog.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -367,7 +366,7 @@ class Statistics extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.08,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () => showDialog(context: context, builder: (context) => InfoDialog(documents)),
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
@@ -398,6 +397,7 @@ class Statistics extends StatelessWidget {
                 color: Colors.white38,
                 borderRadius: BorderRadius.circular(16.0),
               ),
+              //constraints: const BoxConstraints(maxWidth: 300.0),
               child: LayoutBuilder(builder: (context, constraints) {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
