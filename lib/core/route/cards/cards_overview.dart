@@ -73,6 +73,7 @@ class CardsOverview extends StatelessWidget {
       child: Column(
         children: [
           Container(
+            color: Colors.white,
             margin: EdgeInsets.symmetric(
                 vertical: MediaQuery.sizeOf(context).height * 0.00),
             alignment: Alignment.topRight,
@@ -99,6 +100,7 @@ class CardsOverview extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  color: Colors.white,
                   width: MediaQuery.sizeOf(context).width * 0.225,
                   height: MediaQuery.sizeOf(context).height * 0.065,
                   margin: EdgeInsets.only(
@@ -182,6 +184,7 @@ class CardsOverview extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         decoration: BoxDecoration(
+                            color: Colors.white,
                             border: Border(
                                 bottom:
                                     BorderSide(color: Colors.grey.shade300))),

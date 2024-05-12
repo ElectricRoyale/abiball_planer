@@ -314,6 +314,19 @@ class Statistics extends StatelessWidget {
     ]);
   }
 
+  Widget infoDialog(BuildContext context) => Dialog(
+    clipBehavior: Clip.hardEdge,
+    shape:
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+    insetPadding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.15,
+        vertical: MediaQuery.of(context).size.height * 0.1),
+    child: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
+      child: InfoDialog(documents),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -366,7 +379,7 @@ class Statistics extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.08,
                   child: TextButton(
-                      onPressed: () => showDialog(context: context, builder: (context) => InfoDialog(documents)),
+                      onPressed: () => showDialog(context: context, builder: (context) => infoDialog(context)),
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
