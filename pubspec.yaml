@@ -39,7 +39,6 @@ dependencies:
   window_manager: ^0.3.8
   syncfusion_flutter_charts: ^25.1.40
   intl: ^0.19.0
-  web_socket_channel: ^2.4.5
   bson: ^5.0.4
   bloc: ^8.1.4
   flutter_bloc: ^8.1.5

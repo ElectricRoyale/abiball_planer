@@ -2,7 +2,7 @@ import 'package:abiball_planer/core/managment/managerProvider.dart';
 import 'package:abiball_planer/core/managment/stateManagment.dart';
 import 'package:abiball_planer/core/route/cards/cards_overview.dart';
 import 'package:abiball_planer/core/route/email/email_view.dart';
-import 'package:abiball_planer/core/service/websocketService.dart';
+import 'package:abiball_planer/core/service/web_socket_service.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -32,7 +32,7 @@ class MainLayoutState extends State<MainLayout> {
 
   @override
   void dispose() {
-    //RealtimeDataService().close();
+    RealtimeDataService().close();
     focusNode.dispose();
     super.dispose();
   }

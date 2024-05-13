@@ -1,6 +1,6 @@
 import 'package:abiball_planer/core/route/cards/allergens_widget.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
-import 'package:abiball_planer/core/service/websocketService.dart';
+import 'package:abiball_planer/core/service/web_socket_service.dart';
 import 'package:abiball_planer/core/utils/counter_view.dart';
 import 'package:flutter/material.dart';
 

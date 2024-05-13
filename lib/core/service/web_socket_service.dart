@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:abiball_planer/core/mainlayout.dart';
@@ -6,26 +8,43 @@ import 'package:abiball_planer/core/managment/managerProvider.dart';
 import 'package:abiball_planer/core/route/cards/add_dialog.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/utils/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class RealtimeDataService {
   static final RealtimeDataService _instance = RealtimeDataService._internal();
 
+  BuildContext? context;
+
+  StreamController<String> streamController =
+      StreamController.broadcast(sync: true);
+
+  String wsUrl = "ws://192.168.0.131:8000/ws";
+  late WebSocket _channel;
+
   factory RealtimeDataService() => _instance;
 
   RealtimeDataService._internal() {
-    initializeWebsocketService();
+    initWebSocketConnection();
   }
 
-  BuildContext? context;
+  initWebSocketConnection() async {
+    if (kDebugMode) {
+      print("conecting...");
+    }
+    _channel = await connectWs();
+    if (kDebugMode) {
+      print("socket connection initializied");
+    }
+    _channel.done.then((dynamic _) => _onDisconnected());
+    broadcastNotifications();
+  }
 
-  final _channel =
-      WebSocketChannel.connect(Uri.parse("ws://192.168.0.131:8000/ws"));
-
-  void initializeWebsocketService() {
-    _channel.stream.listen((data) {
-      print(data);
+  void broadcastNotifications() {
+    _channel.listen((data) {
+      if (kDebugMode) {
+        print(data);
+      }
       Map dataMap = jsonDecode(data.toString());
       if (context != null) {
         switch (dataMap["type"]) {
@@ -125,31 +144,58 @@ class RealtimeDataService {
             break;
         }
       }
-    }, onDone: () => close, onError: (error) => print(error));
+    }, onDone: () {
+      if (kDebugMode) {
+        print("connecting aborted");
+      }
+      initWebSocketConnection();
+    }, onError: (error) {
+      if (kDebugMode) {
+        print('Server error: $error');
+      }
+      initWebSocketConnection();
+    });
+  }
+
+  connectWs() async {
+    try {
+      return await WebSocket.connect(wsUrl);
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error! can not connect WS connectWs $e");
+      }
+      await Future.delayed(const Duration(milliseconds: 10000));
+      return await connectWs();
+    }
+  }
+
+  void _onDisconnected() {
+
+    initWebSocketConnection();
   }
 
   void getVisitors() =>
-      _channel.sink.add(jsonEncode({"method": "getVisitors"}));
+      _channel.add(jsonEncode({"method": "getVisitors"}));
 
   void getSingleVisitor(Map condition) {
-    _channel.sink
+    _channel
         .add(jsonEncode({"method": "getSingleVisitor", "args": condition}));
   }
 
   void insertVisitor(Map args) =>
-      _channel.sink.add(jsonEncode({"method": "addVisitor", "args": args}));
+      _channel.add(jsonEncode({"method": "addVisitor", "args": args}));
 
   void updateVisitor(Map args, Map condition) {
-    _channel.sink.add(jsonEncode({
+    _channel.add(jsonEncode({
       "method": "updateVisitor",
       "args": {"update_data": args, "condition": condition}
     }));
   }
 
-  void deleteVisitor(Map condition) => _channel.sink
+  void deleteVisitor(Map condition) => _channel
       .add(jsonEncode({"method": "deleteVisitor", "args": condition}));
 
   void close() {
-    _channel.sink.close();
+    _channel.close();
   }
 }

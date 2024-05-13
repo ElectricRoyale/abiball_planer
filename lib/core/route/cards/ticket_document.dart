@@ -1,4 +1,4 @@
-import 'package:abiball_planer/core/service/websocketService.dart';
+import 'package:abiball_planer/core/service/web_socket_service.dart';
 
 class TicketDocument {
   TicketDocument(

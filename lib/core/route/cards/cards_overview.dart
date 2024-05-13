@@ -5,7 +5,7 @@ import 'package:abiball_planer/core/route/cards/add_dialog.dart';
 import 'package:abiball_planer/core/route/cards/edit_dialog.dart';
 import 'package:abiball_planer/core/route/cards/statistics.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
-import 'package:abiball_planer/core/service/websocketService.dart';
+import 'package:abiball_planer/core/service/web_socket_service.dart';
 import 'package:abiball_planer/core/utils/searchfield.dart';
 import 'package:abiball_planer/core/utils/utils.dart';
 import 'package:flutter/material.dart';

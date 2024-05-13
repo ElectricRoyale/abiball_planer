@@ -1,5 +1,5 @@
 import 'package:abiball_planer/core/mainlayout.dart';
-import 'package:abiball_planer/core/service/websocketService.dart';
+import 'package:abiball_planer/core/service/web_socket_service.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
