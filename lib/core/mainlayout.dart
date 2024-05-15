@@ -24,7 +24,6 @@ class MainLayoutState extends State<MainLayout> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       isMaximized = !await WindowManager.instance.isMaximized();
-      RealtimeDataService().getVisitors();
       setState(() {});
     });
     super.initState();

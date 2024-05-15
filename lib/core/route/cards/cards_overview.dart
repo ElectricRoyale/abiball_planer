@@ -184,7 +184,6 @@ class CardsOverview extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         decoration: BoxDecoration(
-                            color: Colors.white,
                             border: Border(
                                 bottom:
                                     BorderSide(color: Colors.grey.shade300))),

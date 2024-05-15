@@ -19,7 +19,7 @@ class RealtimeDataService {
   StreamController<String> streamController =
       StreamController.broadcast(sync: true);
 
-  String wsUrl = "ws://127.0.0.1:8000/ws";
+  String wsUrl = "ws://192.168.0.131:8000/ws";
   late WebSocket _channel;
 
   factory RealtimeDataService() => _instance;
@@ -36,6 +36,7 @@ class RealtimeDataService {
     if (kDebugMode) {
       print("socket connection initializied");
     }
+    getVisitors();
     _channel.done.then((dynamic _) => _onDisconnected());
     broadcastNotifications();
   }
