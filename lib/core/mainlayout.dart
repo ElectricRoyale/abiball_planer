@@ -14,8 +14,8 @@ class MainLayout extends StatefulWidget {
 }
 
 class MainLayoutState extends State<MainLayout> {
-  PageController controller = PageController(initialPage: 2);
-  int selectedPage = 2;
+  PageController controller = PageController(initialPage: 4);
+  int selectedPage = 4;
   bool isMaximized = false;
   StateManager stateManager = StateManager();
   FocusNode focusNode = FocusNode();
@@ -106,7 +106,9 @@ class MainLayoutState extends State<MainLayout> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.01 + 4),
+                    padding: EdgeInsets.symmetric(
+                        horizontal:
+                            MediaQuery.sizeOf(context).width * 0.01 + 4),
                     child: ListTile(
                       title: Text(
                         'Patient Tools',
@@ -292,7 +294,8 @@ class MainLayoutState extends State<MainLayout> {
                       hoverColor: Colors.grey.shade300,
                       constraints: const BoxConstraints(minWidth: 48),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(8.0), // Round corners
@@ -312,7 +315,8 @@ class MainLayoutState extends State<MainLayout> {
                       hoverColor: Colors.grey.shade300,
                       constraints: const BoxConstraints(minWidth: 48),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(8.0), // Round corners
@@ -327,7 +331,8 @@ class MainLayoutState extends State<MainLayout> {
                       hoverColor: Colors.red,
                       constraints: const BoxConstraints(minWidth: 48),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(8.0), // Round corners
@@ -340,8 +345,12 @@ class MainLayoutState extends State<MainLayout> {
                 Expanded(
                   child: PageView(
                     controller: controller,
-                    onPageChanged: (index) =>
-                        setState(() => selectedPage = index),
+                    onPageChanged: (index) => setState(() {
+                      selectedPage = index;
+                      if (index == 2){
+                        RealtimeDataService().getVisitors();
+                      }
+                    }),
                     children: [
                       Container(),
                       Container(),

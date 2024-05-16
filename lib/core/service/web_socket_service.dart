@@ -7,6 +7,7 @@ import 'package:abiball_planer/core/mainlayout.dart';
 import 'package:abiball_planer/core/managment/managerProvider.dart';
 import 'package:abiball_planer/core/route/cards/add_dialog.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
+import 'package:abiball_planer/core/route/error_dialog.dart';
 import 'package:abiball_planer/core/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -28,16 +29,14 @@ class RealtimeDataService {
     initWebSocketConnection();
   }
 
-  initWebSocketConnection() async {
+  Future initWebSocketConnection() async {
     if (kDebugMode) {
-      print("conecting...");
+      print("connecting...");
     }
     _channel = await connectWs();
     if (kDebugMode) {
-      print("socket connection initializied");
+      print("socket connection initialized!");
     }
-    getVisitors();
-    _channel.done.then((dynamic _) => _onDisconnected());
     broadcastNotifications();
   }
 
@@ -149,7 +148,7 @@ class RealtimeDataService {
       if (kDebugMode) {
         print("connecting aborted");
       }
-      initWebSocketConnection();
+      _onDisconnected();
     }, onError: (error) {
       if (kDebugMode) {
         print('Server error: $error');
@@ -171,7 +170,15 @@ class RealtimeDataService {
   }
 
   void _onDisconnected() {
-    initWebSocketConnection();
+    showDialog(
+        context: context!,
+        barrierDismissible: true,
+        useRootNavigator: true,
+        builder: (context) => const ErrorDialog());
+    initWebSocketConnection().then((value) {
+      Navigator.pop(context!);
+      getVisitors();
+    });
   }
 
   void getVisitors() => _channel.add(jsonEncode({"method": "getVisitors"}));

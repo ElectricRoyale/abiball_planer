@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ErrorDialog extends StatelessWidget {
-  final bool _retry;
-  final Function onRetry;
 
-  const ErrorDialog(this._retry, this.onRetry, {super.key});
+  const ErrorDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +24,26 @@ class ErrorDialog extends StatelessWidget {
             Align(
                 child: SvgPicture.asset(
               'assets/error.svg',
-              width: screenSize.width * 0.2916666,
-              height: screenSize.width * 0.2916666,
+              width: screenSize.width * 0.05916666,
+              height: screenSize.width * 0.05916666,
               fit: BoxFit.cover,
             )),
-            Column(
+            const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Connection Error!',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 26),
                 ),
-                const Text(
+                Text(
                   "The connection to the server is lost!",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
-                if (_retry)
-                  TextButton(
-                      onPressed: () => onRetry.call(),
-                      child: const Text("retry")),
               ],
             ),
           ]),
