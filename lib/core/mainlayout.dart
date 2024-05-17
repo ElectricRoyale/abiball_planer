@@ -38,6 +38,7 @@ class MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
+    RealtimeDataService().context = context;
     return Material(
       surfaceTintColor: Colors.white,
       color: Colors.white,
@@ -347,7 +348,7 @@ class MainLayoutState extends State<MainLayout> {
                     controller: controller,
                     onPageChanged: (index) => setState(() {
                       selectedPage = index;
-                      if (index == 2){
+                      if (index == 2) {
                         RealtimeDataService().getVisitors();
                       }
                     }),

@@ -21,7 +21,7 @@ class RealtimeDataService {
       StreamController.broadcast(sync: true);
 
   String wsUrl = "ws://192.168.0.131:8000/ws";
-  late WebSocket _channel;
+  WebSocket? _channel;
 
   factory RealtimeDataService() => _instance;
 
@@ -41,7 +41,7 @@ class RealtimeDataService {
   }
 
   void broadcastNotifications() {
-    _channel.listen((data) {
+    _channel!.listen((data) {
       if (kDebugMode) {
         print(data);
       }
@@ -164,43 +164,59 @@ class RealtimeDataService {
       if (kDebugMode) {
         print("Error! can not connect WS connectWs $e");
       }
-      await Future.delayed(const Duration(milliseconds: 10000));
+      showDialog(
+          context: context!,
+          barrierDismissible: true,
+          useRootNavigator: true,
+          builder: (context) => const ErrorDialog());
+      await Future.delayed(const Duration(milliseconds: 10000)).then((value) {
+        Navigator.pop(context!);
+      });
       return await connectWs();
     }
   }
 
-  void _onDisconnected() {
-    showDialog(
-        context: context!,
-        barrierDismissible: true,
-        useRootNavigator: true,
-        builder: (context) => const ErrorDialog());
-    initWebSocketConnection().then((value) {
-      Navigator.pop(context!);
-      getVisitors();
-    });
-  }
+  void _onDisconnected() => initWebSocketConnection().then((value) {
+        getVisitors();
+      });
 
-  void getVisitors() => _channel.add(jsonEncode({"method": "getVisitors"}));
+  void getVisitors() {
+    if (_channel != null) {
+      _channel!.add(jsonEncode({"method": "getVisitors"}));
+    }
+  }
 
   void getSingleVisitor(Map condition) {
-    _channel.add(jsonEncode({"method": "getSingleVisitor", "args": condition}));
+    if (_channel != null) {
+      _channel!
+          .add(jsonEncode({"method": "getSingleVisitor", "args": condition}));
+    }
   }
 
-  void insertVisitor(Map args) =>
-      _channel.add(jsonEncode({"method": "addVisitor", "args": args}));
+  void insertVisitor(Map args) {
+    if (_channel != null) {
+      _channel!.add(jsonEncode({"method": "addVisitor", "args": args}));
+    }
+  }
 
   void updateVisitor(Map args, Map condition) {
-    _channel.add(jsonEncode({
-      "method": "updateVisitor",
-      "args": {"update_data": args, "condition": condition}
-    }));
+    if (_channel != null) {
+      _channel!.add(jsonEncode({
+        "method": "updateVisitor",
+        "args": {"update_data": args, "condition": condition}
+      }));
+    }
   }
 
-  void deleteVisitor(Map condition) =>
-      _channel.add(jsonEncode({"method": "deleteVisitor", "args": condition}));
+  void deleteVisitor(Map condition) {
+    if (_channel != null) {
+      _channel!.add(jsonEncode({"method": "deleteVisitor", "args": condition}));
+    }
+  }
 
   void close() {
-    _channel.close();
+    if (_channel != null) {
+      _channel!.close();
+    }
   }
 }
