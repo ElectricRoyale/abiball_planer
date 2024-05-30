@@ -18,7 +18,7 @@ class RealtimeDataService {
   BuildContext? context;
 
   StreamController<String> streamController =
-      StreamController.broadcast(sync: true);
+  StreamController.broadcast(sync: true);
 
   String wsUrl = "ws://192.168.0.131:8000/ws";
   WebSocket? _channel;
@@ -38,6 +38,7 @@ class RealtimeDataService {
       print("socket connection initialized!");
     }
     broadcastNotifications();
+    getVisitors();
   }
 
   void broadcastNotifications() {
@@ -93,11 +94,11 @@ class RealtimeDataService {
                                     borderRadius: BorderRadius.circular(30)),
                                 insetPadding: EdgeInsets.symmetric(
                                     horizontal:
-                                        MediaQuery.of(context).size.width *
-                                            0.15,
+                                    MediaQuery.of(context).size.width *
+                                        0.15,
                                     vertical:
-                                        MediaQuery.of(context).size.height *
-                                            0.1),
+                                    MediaQuery.of(context).size.height *
+                                        0.1),
                                 child: AddDialogLayout(
                                   soldCards(ManagerProvider.of(this.context!)
                                       .tickets),
@@ -177,8 +178,8 @@ class RealtimeDataService {
   }
 
   void _onDisconnected() => initWebSocketConnection().then((value) {
-        getVisitors();
-      });
+    getVisitors();
+  });
 
   void getVisitors() {
     if (_channel != null) {

@@ -37,100 +37,12 @@ class _EmailViewState extends State<EmailView> {
     super.dispose();
   }
 
-  InputDecoration decoration(bool showSuffix) {
-    return InputDecoration(
-      border: InputBorder.none,
-      contentPadding: const EdgeInsets.all(10.0),
-      hintText: 'Search for Email',
-      prefixIcon: const Icon(
-        Icons.search,
-        size: 28,
-      ),
-      prefixIconColor: Colors.grey.shade300,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Material(
-      surfaceTintColor: Colors.white,
+      color: Colors.white,
       child: Column(
         children: [
-          Container(
-            height: MediaQuery.sizeOf(context).height * 0.125,
-            padding:
-                EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.01),
-            alignment: Alignment.topRight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Transform.translate(
-                  offset: Offset(MediaQuery.sizeOf(context).width * 0.015, 0.0),
-                  child: const Text(
-                    'Postfach',
-                    textScaler: TextScaler.linear(2.0),
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.sizeOf(context).width * 0.25,
-                  height: MediaQuery.sizeOf(context).height * 0.07,
-                  margin: EdgeInsets.only(
-                      right: MediaQuery.sizeOf(context).width * 0.03),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Colors.black38,
-                          blurRadius: 1,
-                          blurStyle: BlurStyle.outer)
-                    ],
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: AutoCompleteTextField<TicketDocument>(
-                    key: key,
-                    decoration: decoration(false),
-                    onFocusChanged: (focus) =>
-                        focus ? null : focusNode.requestFocus(),
-                    suggestions: items,
-                    unFocusOnItemSubmitted: true,
-                    itemSubmitted: (item) {
-                      focusNode.requestFocus();
-                    },
-                    textSubmitted: (item) {
-                      focusNode.requestFocus();
-                    },
-                    clearOnSubmit: false,
-                    itemBuilder: (context, document, selected, last) => Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          title: Text(document.toString()),
-                          selected: selected,
-                          selectedColor:
-                              Theme.of(context).textTheme.titleLarge!.color,
-                          tileColor: Colors.white,
-                          selectedTileColor: Colors.grey.shade200,
-                        ),
-                        !last
-                            ? const Divider(
-                                height: 0,
-                                indent: 15,
-                                endIndent: 15,
-                              )
-                            : Container(),
-                      ],
-                    ),
-                    itemSorter: (a, b) => a.toString().compareTo(b.toString()),
-                    itemFilter: (document, option) => document
-                        .toString()
-                        .toLowerCase()
-                        .contains(option.toLowerCase()),
-                  ),
-                ),
-              ],
-            ),
-          ),
           Expanded(
             child: Container(
               margin: const EdgeInsets.fromLTRB(20.0, 3.0, 20.0, 16.0),

@@ -6,7 +6,6 @@ import 'package:abiball_planer/core/route/cards/edit_dialog.dart';
 import 'package:abiball_planer/core/route/cards/statistics.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/service/web_socket_service.dart';
-import 'package:abiball_planer/core/utils/searchfield.dart';
 import 'package:abiball_planer/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,24 +14,6 @@ class CardsOverview extends StatelessWidget {
   const CardsOverview(this.focusNode, {super.key});
 
   final FocusNode focusNode;
-
-  InputDecoration decoration(bool showSuffix) {
-    return InputDecoration(
-      enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75),
-          borderRadius: BorderRadius.circular(10.0)),
-      focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75),
-          borderRadius: BorderRadius.circular(10.0)),
-      contentPadding: const EdgeInsets.all(7.0),
-      hintText: 'Search for Name',
-      prefixIcon: const Icon(
-        Icons.search,
-        size: 28,
-      ),
-      prefixIconColor: Colors.grey.shade300,
-    );
-  }
 
   Widget addDialog(BuildContext context) => Dialog(
     clipBehavior: Clip.hardEdge,
@@ -67,89 +48,10 @@ class CardsOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RealtimeDataService().context = context;
     return Material(
-      surfaceTintColor: Colors.white,
+      color: Colors.white,
       child: Column(
         children: [
-          Container(
-            color: Colors.white,
-            margin: EdgeInsets.symmetric(
-                vertical: MediaQuery.sizeOf(context).height * 0.00),
-            alignment: Alignment.topRight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Transform.translate(
-                  offset: Offset(MediaQuery.sizeOf(context).width * 0.015, 0.0),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hi Pascal Reinmuth',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Karten',
-                        textScaler: TextScaler.linear(2.0),
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  width: MediaQuery.sizeOf(context).width * 0.225,
-                  height: MediaQuery.sizeOf(context).height * 0.065,
-                  margin: EdgeInsets.only(
-                      right: MediaQuery.sizeOf(context).width * 0.03),
-                  child: AutoCompleteTextField<TicketDocument>(
-                    decoration: decoration(false),
-                    onFocusChanged: (focus) =>
-                        focus ? null : focusNode.requestFocus(),
-                    suggestions: ManagerProvider.of(context).tickets,
-                    unFocusOnItemSubmitted: true,
-                    itemSubmitted: (item) {
-                      ManagerProvider.of(context).search(item.toString());
-                      focusNode.requestFocus();
-                    },
-                    textSubmitted: (item) {
-                      ManagerProvider.of(context).search(item);
-                      focusNode.requestFocus();
-                    },
-                    clearOnSubmit: false,
-                    itemBuilder: (context, document, selected, last) => Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          title: Text(document.toString()),
-                          selected: selected,
-                          selectedColor:
-                              Theme.of(context).textTheme.titleLarge!.color,
-                          tileColor: Colors.white,
-                          selectedTileColor: Colors.grey.shade200,
-                        ),
-                        !last
-                            ? const Divider(
-                                height: 0,
-                                indent: 15,
-                                endIndent: 15,
-                              )
-                            : Container(),
-                      ],
-                    ),
-                    itemSorter: (a, b) => a.toString().compareTo(b.toString()),
-                    itemFilter: (document, option) => document
-                        .toString()
-                        .toLowerCase()
-                        .contains(option.toLowerCase()),
-                  ),
-                ),
-              ],
-            ),
-          ),
           Statistics(
             ManagerProvider.of(context).tickets,
           )..setStatisticData(),
