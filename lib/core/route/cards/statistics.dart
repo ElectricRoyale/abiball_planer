@@ -3,7 +3,9 @@ import 'dart:ui' as ui;
 import 'package:abiball_planer/core/route/cards/info_dialog.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -349,7 +351,7 @@ class Statistics extends StatelessWidget {
               color: Colors.blue)
         ],
       ),
-      child: Builder(builder: (context) {
+      child: LayoutBuilder(builder: (context, constraints) {
         return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Container(
             constraints: const BoxConstraints(maxWidth: 250, minWidth: 50),
@@ -395,7 +397,8 @@ class Statistics extends StatelessWidget {
           ),
           ...gridItems.map(
             (item) => Container(
-              constraints: const BoxConstraints(maxWidth: 325),
+              width: (constraints.maxWidth / (MediaQuery.sizeOf(context).width >= 1600 ? 5 : 4)) * 0.95,
+              constraints: const BoxConstraints(maxWidth: 325, minWidth: 150),
               margin: EdgeInsets.symmetric(
                   vertical: MediaQuery.sizeOf(context).height * 0.01),
               padding: EdgeInsets.only(
@@ -408,15 +411,15 @@ class Statistics extends StatelessWidget {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Expanded(
+                    Flexible(
                       flex: 2,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
+                          Flexible(
                             flex: 3,
                             child: Container(
-                              height: double.infinity,
+                              height: constraints.maxHeight,
                               alignment: AlignmentDirectional.centerStart,
                               child: Text(
                                 item.topic,
@@ -427,11 +430,11 @@ class Statistics extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(flex: 4, child: item.stats),
+                          Flexible(flex: 4, child: item.stats),
                         ],
                       ),
                     ),
-                    Expanded(
+                    Flexible(
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(maxHeight: 114.0),
                         child: SfCircularChart(
@@ -447,9 +450,10 @@ class Statistics extends StatelessWidget {
               }),
             ),
           ),
-          if (MediaQuery.sizeOf(context).width >= 2000)
+          if (MediaQuery.sizeOf(context).width >= 1600)
             Container(
-              constraints: const BoxConstraints(maxWidth: 325),
+              width: (constraints.maxWidth / 5) * 0.95,
+              constraints: const BoxConstraints(maxWidth: 325, minWidth: 150),
               margin: EdgeInsets.symmetric(
                   vertical: MediaQuery.sizeOf(context).height * 0.01),
               padding: EdgeInsets.only(
@@ -459,143 +463,141 @@ class Statistics extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: LayoutBuilder(builder: (context, constraints) {
-                return Expanded(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          height: double.infinity,
-                          alignment: AlignmentDirectional.centerStart,
-                          child: const Text(
-                            'Allergens',
-                            textScaler: TextScaler.linear(1.25),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      flex: 3,
+                      child: Container(
+                        height: constraints.maxHeight,
+                        alignment: AlignmentDirectional.centerStart,
+                        child: const Text(
+                          'Allergens',
+                          textScaler: TextScaler.linear(1.25),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Expanded(
-                        flex: 4,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius: BorderRadius.circular(14.0),
-                              color: const Color.fromARGB(255, 240, 240, 240)),
-                          clipBehavior: Clip.hardEdge,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 215, 215, 215),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Color.fromARGB(
-                                              255, 160, 160, 160),
-                                          blurRadius: 4,
-                                          blurStyle: BlurStyle.solid,
-                                          offset: Offset(0.0, 0.1),
-                                          spreadRadius: 1),
-                                    ],
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.black, width: 1)),
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(14),
-                                        topRight: Radius.circular(14)),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 16.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 3,
-                                          child: Container(),
+                    ),
+                    Flexible(
+                      flex: 4,
+                      child: Container(
+                        width: constraints.maxWidth,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(14.0),
+                            color: const Color.fromARGB(255, 240, 240, 240)),
+                        clipBehavior: Clip.hardEdge,
+                        child: Column(
+                          children: [
+                            Flexible(
+                              flex: 4,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 215, 215, 215),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Color.fromARGB(
+                                            255, 160, 160, 160),
+                                        blurRadius: 4,
+                                        blurStyle: BlurStyle.solid,
+                                        offset: Offset(0.0, 0.1),
+                                        spreadRadius: 1),
+                                  ],
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: Colors.black, width: 1)),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(14),
+                                      topRight: Radius.circular(14)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 16.0),
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        flex: 3,
+                                        child: Container(),
+                                      ),
+                                      const Flexible(
+                                        flex: 3,
+                                        child: Text(
+                                          'Anzahl',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
                                         ),
-                                        const Expanded(
-                                          flex: 3,
-                                          child: Text(
-                                            'Anzahl',
+                                      ),
+                                      Flexible(
+                                        flex: 3,
+                                        child: Container(),
+                                      ),
+                                      const Flexible(
+                                        flex: 36,
+                                        child: Text('Allergie',
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Container(),
-                                        ),
-                                        const Expanded(
-                                          flex: 36,
-                                          child: Text('Allergie',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                      ],
-                                    ),
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                flex: 12,
-                                child: ListView.separated(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, top: 5, bottom: 10.0),
-                                    itemBuilder: (context, index) => Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, top: 3.0),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                  flex: 3,
-                                                  child: Text(
-                                                    '${index + 1}.',
-                                                    textAlign: TextAlign.center,
-                                                  )),
-                                              Expanded(
+                            ),
+                            Flexible(
+                              flex: 12,
+                              child: ListView.separated(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, top: 5, bottom: 10.0),
+                                  itemBuilder: (context, index) => Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, top: 3.0),
+                                        child: Row(
+                                          children: [
+                                            Flexible(
                                                 flex: 3,
                                                 child: Text(
-                                                  allergens
-                                                      .elementAt(index)
-                                                      .amount
-                                                      .toString(),
+                                                  '${index + 1}.',
                                                   textAlign: TextAlign.center,
-                                                ),
+                                                )),
+                                            Flexible(
+                                              flex: 3,
+                                              child: Text(
+                                                allergens
+                                                    .elementAt(index)
+                                                    .amount
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
                                               ),
-                                              Expanded(
-                                                flex: 3,
-                                                child: Container(),
+                                            ),
+                                            Flexible(
+                                              flex: 3,
+                                              child: Container(),
+                                            ),
+                                            Flexible(
+                                              flex: 36,
+                                              child: Text(
+                                                allergens
+                                                    .elementAt(index)
+                                                    .allergenType,
                                               ),
-                                              Expanded(
-                                                flex: 36,
-                                                child: Text(
-                                                  allergens
-                                                      .elementAt(index)
-                                                      .allergenType,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                    separatorBuilder: (context, index) =>
-                                        const Divider(
-                                          color: Colors.black,
-                                          indent: 5,
-                                          endIndent: 5,
-                                        ),
-                                    itemCount: allergens.length),
-                              ),
-                            ],
-                          ),
+                                      ),
+                                  separatorBuilder: (context, index) =>
+                                      const Divider(
+                                        color: Colors.black,
+                                        indent: 5,
+                                        endIndent: 5,
+                                      ),
+                                  itemCount: allergens.length),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 );
               }),
             ),
