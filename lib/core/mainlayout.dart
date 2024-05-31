@@ -5,9 +5,7 @@ import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/route/email/email_view.dart';
 import 'package:abiball_planer/core/service/web_socket_service.dart';
 import 'package:abiball_planer/core/utils/searchfield.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:window_manager/window_manager.dart';
 
 class MainLayout extends StatefulWidget {
@@ -50,6 +48,8 @@ class MainLayoutState extends State<MainLayout> {
 
   InputDecoration decoration(bool showSuffix) {
     return InputDecoration(
+      filled: true,
+      fillColor: Colors.white,
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75),
           borderRadius: BorderRadius.circular(10.0)),
@@ -57,7 +57,7 @@ class MainLayoutState extends State<MainLayout> {
           borderSide: BorderSide(color: Colors.grey.shade300, width: 0.75),
           borderRadius: BorderRadius.circular(10.0)),
       contentPadding: const EdgeInsets.all(7.0),
-      hintText: 'Search for Name',
+      hintText: 'Search for Name, Email, Organisation, Settings,...',
       prefixIcon: const Icon(
         Icons.search,
         size: 28,
@@ -70,8 +70,7 @@ class MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     RealtimeDataService().context = context;
     return Material(
-      surfaceTintColor: Colors.white,
-      color: Colors.white,
+      color: Colors.grey.shade100,
       child: Row(
         children: [
           Container(
@@ -381,7 +380,7 @@ class MainLayoutState extends State<MainLayout> {
                       return Column(
                         children: [
                           Container(
-                            color: Colors.white,
+                            color: Colors.transparent,
                             margin: EdgeInsets.symmetric(
                                 vertical:
                                     MediaQuery.sizeOf(context).height * 0.00),
@@ -414,7 +413,7 @@ class MainLayoutState extends State<MainLayout> {
                                   ),
                                 ),
                                 Container(
-                                  color: Colors.white,
+                                  color: Colors.transparent,
                                   width:
                                       MediaQuery.sizeOf(context).width * 0.225,
                                   height:

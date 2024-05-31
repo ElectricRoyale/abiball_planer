@@ -16,63 +16,62 @@ class CardsOverview extends StatelessWidget {
   final FocusNode focusNode;
 
   Widget addDialog(BuildContext context) => Dialog(
-    clipBehavior: Clip.hardEdge,
-    shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-    insetPadding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * 0.15,
-        vertical: MediaQuery.of(context).size.height * 0.1),
-    child: ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
-      child: AddDialogLayout(
-            soldCards(ManagerProvider.of(context).tickets),
-          ),
-    ),
-  );
-
-  Widget editDialog(BuildContext context, int index) => Dialog(
-    clipBehavior: Clip.hardEdge,
-    shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-    insetPadding: EdgeInsets.symmetric(
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        insetPadding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.15,
             vertical: MediaQuery.of(context).size.height * 0.1),
-    child: ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
-      child: EditDialogLayout(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
+          child: AddDialogLayout(
+            soldCards(ManagerProvider.of(context).tickets),
+          ),
+        ),
+      );
+
+  Widget editDialog(BuildContext context, int index) => Dialog(
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        insetPadding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.15,
+            vertical: MediaQuery.of(context).size.height * 0.1),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
+          child: EditDialogLayout(
             soldCards(ManagerProvider.of(context).viewTickets),
             ManagerProvider.of(context).viewTickets.elementAt(index),
           ),
-    ),
-  );
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
-      child: Column(
-        children: [
-          Statistics(
-            ManagerProvider.of(context).tickets,
-          )..setStatisticData(),
-          Expanded(
-            child: CallbackShortcuts(
-              bindings: {
-                const SingleActivator(LogicalKeyboardKey.keyN, control: true):
-                    () => showDialog(
-                        context: context,
-                        builder: (builder) => BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: addDialog(context))).then(
-                        (value) => focusNode.requestFocus()),
-                const SingleActivator(LogicalKeyboardKey.f5): () =>
-                    RealtimeDataService().getVisitors(),
-              },
-              child: Focus(
-                focusNode: focusNode..requestFocus(),
-                autofocus: true,
+      color: Colors.transparent,
+      child: CallbackShortcuts(
+        bindings: {
+          const SingleActivator(LogicalKeyboardKey.keyN, control: true): () =>
+              showDialog(
+                      context: context,
+                      builder: (builder) => BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: addDialog(context)))
+                  .then((value) => focusNode.requestFocus()),
+          const SingleActivator(LogicalKeyboardKey.f5): () =>
+              RealtimeDataService().getVisitors(),
+        },
+        child: Focus(
+          focusNode: focusNode..requestFocus(),
+          autofocus: true,
+          child: Column(
+            children: [
+              Statistics(
+                ManagerProvider.of(context).tickets,
+                ManagerProvider.of(context).allergens,
+              )..setStatisticData(),
+              Expanded(
                 child: Container(
-                  margin: const EdgeInsets.fromLTRB(20.0, 3.0, 20.0, 16.0),
+                  margin: EdgeInsets.fromLTRB(20.0, MediaQuery.sizeOf(context).height * 0.03, 20.0, 16.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
@@ -556,9 +555,9 @@ class CardsOverview extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

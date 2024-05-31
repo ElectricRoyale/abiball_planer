@@ -7,9 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class Statistics extends StatelessWidget {
-  Statistics(this.documents, {super.key});
+import 'allergens_widget.dart';
 
+class Statistics extends StatelessWidget {
+  Statistics(this.documents, this.allergens, {super.key});
+
+  final List<Allergy> allergens;
   final List<TicketDocument> documents;
 
   final List<GridItem> gridItems = [];
@@ -112,76 +115,72 @@ class Statistics extends StatelessWidget {
     gridItems.addAll([
       GridItem(
         'Geld:',
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Ausgaben: ',
-                    textScaler: TextScaler.linear(0.9),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    intl.NumberFormat.currency(locale: 'eu', symbol: '€')
-                        .format(minMoney(soldCards(documents))),
-                    textScaler: const TextScaler.linear(0.9),
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
+              const Text(
+                'Ausgaben: ',
+                textScaler: TextScaler.linear(0.9),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Einnahmen: ',
-                    textScaler: TextScaler.linear(0.9),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    intl.NumberFormat.currency(locale: 'eu', symbol: '€')
-                        .format(money(documents)),
-                    style: TextStyle(
-                        color:
-                            money(documents) >= minMoney(soldCards(documents))
-                                ? Colors.green
-                                : Colors.red),
-                    textScaler: const TextScaler.linear(0.9),
-                  ),
-                ],
+              Text(
+                intl.NumberFormat.currency(locale: 'eu', symbol: '€')
+                    .format(minMoney(soldCards(documents))),
+                textScaler: const TextScaler.linear(0.9),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Differenz: ',
-                    textScaler: TextScaler.linear(0.9),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    '${(money(documents) - minMoney(soldCards(documents))) > 0 ? "+" : ""}${intl.NumberFormat.currency(locale: 'eu', symbol: '€', decimalDigits: 0).format(money(documents) - minMoney(soldCards(documents)))}',
-                    style: TextStyle(
-                        color:
-                            money(documents) >= minMoney(soldCards(documents))
-                                ? const Color.fromARGB(255, 151, 255, 0)
-                                : Colors.red),
-                    textScaler: const TextScaler.linear(0.9),
-                  ),
-                ],
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Einnahmen: ',
+                textScaler: TextScaler.linear(0.9),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
-            ]),
+              Text(
+                intl.NumberFormat.currency(locale: 'eu', symbol: '€')
+                    .format(money(documents)),
+                style: TextStyle(
+                    color: money(documents) >= minMoney(soldCards(documents))
+                        ? Colors.green
+                        : Colors.red),
+                textScaler: const TextScaler.linear(0.9),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Differenz: ',
+                textScaler: TextScaler.linear(0.9),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                '${(money(documents) - minMoney(soldCards(documents))) > 0 ? "+" : ""}${intl.NumberFormat.currency(locale: 'eu', symbol: '€', decimalDigits: 0).format(money(documents) - minMoney(soldCards(documents)))}',
+                style: TextStyle(
+                    color: money(documents) >= minMoney(soldCards(documents))
+                        ? const Color.fromARGB(255, 151, 255, 0)
+                        : Colors.red),
+                textScaler: const TextScaler.linear(0.9),
+              ),
+            ],
+          ),
+        ]),
         _getMoneySeries(),
         annotations: <CircularChartAnnotation>[
           CircularChartAnnotation(
@@ -209,48 +208,46 @@ class Statistics extends StatelessWidget {
       ),
       GridItem(
         'Karten:',
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'Insgesamt: ',
-                    textScaler: TextScaler.linear(0.9),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    soldCards(documents).toString(),
-                    style: TextStyle(
-                        color: soldCards(documents) <= 599
-                            ? const Color.fromARGB(255, 122, 227, 0)
-                            : (soldCards(documents) > 599 &&
-                                    soldCards(documents) < 728)
-                                ? Colors.orange
-                                : Colors.red),
-                    textScaler: const TextScaler.linear(0.9),
-                  ),
-                  const Text(
-                    '/728',
-                    textScaler: TextScaler.linear(0.9),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                'Hartkarten: ${hardCards(documents)}',
-                textScaler: const TextScaler.linear(0.9),
-                style: const TextStyle(
+              const Text(
+                'Insgesamt: ',
+                textScaler: TextScaler.linear(0.9),
+                style: TextStyle(
                   color: Colors.white,
                 ),
-              )
-            ]),
+              ),
+              Text(
+                soldCards(documents).toString(),
+                style: TextStyle(
+                    color: soldCards(documents) <= 599
+                        ? const Color.fromARGB(255, 122, 227, 0)
+                        : (soldCards(documents) > 599 &&
+                                soldCards(documents) < 728)
+                            ? Colors.orange
+                            : Colors.red),
+                textScaler: const TextScaler.linear(0.9),
+              ),
+              const Text(
+                '/728',
+                textScaler: TextScaler.linear(0.9),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          Text(
+            'Hartkarten: ${hardCards(documents)}',
+            textScaler: const TextScaler.linear(0.9),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          )
+        ]),
         _getRadialBarGradientSeries(),
         annotations: <CircularChartAnnotation>[
           CircularChartAnnotation(
@@ -283,31 +280,29 @@ class Statistics extends StatelessWidget {
       ),
       GridItem(
         'Essen:',
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Fleisch: ${meatAmount(documents)}',
-                textScaler: const TextScaler.linear(0.9),
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                'Vegetarisch: ${vegetarianAmount(documents)}',
-                textScaler: const TextScaler.linear(0.9),
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                'Vegan: ${veganAmount(documents)}',
-                textScaler: const TextScaler.linear(0.9),
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ]),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            'Fleisch: ${meatAmount(documents)}',
+            textScaler: const TextScaler.linear(0.9),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          Text(
+            'Vegetarisch: ${vegetarianAmount(documents)}',
+            textScaler: const TextScaler.linear(0.9),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          Text(
+            'Vegan: ${veganAmount(documents)}',
+            textScaler: const TextScaler.linear(0.9),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ]),
         _getPieSeries(),
         palette: palletColors,
       ),
@@ -315,17 +310,16 @@ class Statistics extends StatelessWidget {
   }
 
   Widget infoDialog(BuildContext context) => Dialog(
-    clipBehavior: Clip.hardEdge,
-    shape:
-    RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-    insetPadding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * 0.15,
-        vertical: MediaQuery.of(context).size.height * 0.1),
-    child: ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
-      child: InfoDialog(documents),
-    ),
-  );
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        insetPadding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.15,
+            vertical: MediaQuery.of(context).size.height * 0.1),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
+          child: InfoDialog(documents, allergens),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -333,8 +327,7 @@ class Statistics extends StatelessWidget {
       height: MediaQuery.sizeOf(context).height * 0.18,
       width: MediaQuery.sizeOf(context).width,
       constraints: const BoxConstraints(maxHeight: 150),
-      margin: EdgeInsets.symmetric(
-          vertical: MediaQuery.sizeOf(context).height * 0.03, horizontal: 20.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0),
       padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.sizeOf(context).width * 0.003),
       decoration: BoxDecoration(
@@ -359,10 +352,10 @@ class Statistics extends StatelessWidget {
       child: Builder(builder: (context) {
         return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Container(
-            width: MediaQuery.sizeOf(context).width * 0.16,
+            constraints: const BoxConstraints(maxWidth: 250, minWidth: 50),
             margin: EdgeInsets.only(
                 left: MediaQuery.sizeOf(context).width * 0.01,
-                right: MediaQuery.sizeOf(context).width * 0.00),
+                right: MediaQuery.sizeOf(context).width * 0.01),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -379,7 +372,9 @@ class Statistics extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.08,
                   child: TextButton(
-                      onPressed: () => showDialog(context: context, builder: (context) => infoDialog(context)),
+                      onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => infoDialog(context)),
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
@@ -400,8 +395,7 @@ class Statistics extends StatelessWidget {
           ),
           ...gridItems.map(
             (item) => Container(
-              width: ui.Size.fromWidth(MediaQuery.sizeOf(context).width * 0.19)
-                  .width,
+              constraints: const BoxConstraints(maxWidth: 325),
               margin: EdgeInsets.symmetric(
                   vertical: MediaQuery.sizeOf(context).height * 0.01),
               padding: EdgeInsets.only(
@@ -410,7 +404,6 @@ class Statistics extends StatelessWidget {
                 color: Colors.white38,
                 borderRadius: BorderRadius.circular(16.0),
               ),
-              //constraints: const BoxConstraints(maxWidth: 300.0),
               child: LayoutBuilder(builder: (context, constraints) {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
@@ -454,6 +447,158 @@ class Statistics extends StatelessWidget {
               }),
             ),
           ),
+          if (MediaQuery.sizeOf(context).width >= 2000)
+            Container(
+              constraints: const BoxConstraints(maxWidth: 325),
+              margin: EdgeInsets.symmetric(
+                  vertical: MediaQuery.sizeOf(context).height * 0.01),
+              padding: EdgeInsets.only(
+                  left: MediaQuery.sizeOf(context).height * 0.01),
+              decoration: BoxDecoration(
+                color: Colors.white38,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: LayoutBuilder(builder: (context, constraints) {
+                return Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          height: double.infinity,
+                          alignment: AlignmentDirectional.centerStart,
+                          child: const Text(
+                            'Allergens',
+                            textScaler: TextScaler.linear(1.25),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(),
+                              borderRadius: BorderRadius.circular(14.0),
+                              color: const Color.fromARGB(255, 240, 240, 240)),
+                          clipBehavior: Clip.hardEdge,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 215, 215, 215),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Color.fromARGB(
+                                              255, 160, 160, 160),
+                                          blurRadius: 4,
+                                          blurStyle: BlurStyle.solid,
+                                          offset: Offset(0.0, 0.1),
+                                          spreadRadius: 1),
+                                    ],
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.black, width: 1)),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(14),
+                                        topRight: Radius.circular(14)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 3,
+                                          child: Container(),
+                                        ),
+                                        const Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            'Anzahl',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Container(),
+                                        ),
+                                        const Expanded(
+                                          flex: 36,
+                                          child: Text('Allergie',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 12,
+                                child: ListView.separated(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, top: 5, bottom: 10.0),
+                                    itemBuilder: (context, index) => Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, top: 3.0),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(
+                                                    '${index + 1}.',
+                                                    textAlign: TextAlign.center,
+                                                  )),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  allergens
+                                                      .elementAt(index)
+                                                      .amount
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Container(),
+                                              ),
+                                              Expanded(
+                                                flex: 36,
+                                                child: Text(
+                                                  allergens
+                                                      .elementAt(index)
+                                                      .allergenType,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                    separatorBuilder: (context, index) =>
+                                        const Divider(
+                                          color: Colors.black,
+                                          indent: 5,
+                                          endIndent: 5,
+                                        ),
+                                    itemCount: allergens.length),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            ),
         ]);
       }),
     );

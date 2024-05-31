@@ -40,7 +40,7 @@ class _EmailViewState extends State<EmailView> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Colors.transparent,
       child: Column(
         children: [
           Expanded(

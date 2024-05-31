@@ -1,11 +1,14 @@
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../route/cards/allergens_widget.dart';
+
 class StateManager with ChangeNotifier {
   List<TicketDocument> tickets = [];
   List<TicketDocument> viewTickets = [];
   String? searchValue;
   String sortBy = 'firstname', direction = 'asc';
+  List<Allergy> allergens = [];
 
   void addAll(List data) {
     tickets.clear();
@@ -24,6 +27,23 @@ class StateManager with ChangeNotifier {
           visitor['payed'] == 1,
           visitor['place_number'],
           visitor['money']));
+    }
+    for (var element in tickets) {
+      if (element.allergies != null) {
+        List personAllergies = element.allergies!.split(';');
+        for (var element in personAllergies) {
+          if (element.isNotEmpty) {
+            int amount = int.parse(element.toString().split(',')[0].trim());
+            String allergenType = element.toString().split(',')[1].trim();
+            try {
+              allergens
+                  .firstWhere((item) => item.allergenType == allergenType).amount += amount;
+            } catch (_) {
+              allergens.add(Allergy(amount, allergenType));
+            }
+          }
+        }
+      }
     }
     tickets.sort((a, b) => a.toString().compareTo(b.toString()));
     search(searchValue);

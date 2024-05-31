@@ -1,37 +1,17 @@
 import 'dart:ui' as ui;
 
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../utils/utils.dart';
 import 'allergens_widget.dart';
 
 class InfoDialog extends StatelessWidget {
-  InfoDialog(this.documents, {super.key}){
-    for (var element in documents) {
-      if (element.allergies != null) {
-        List personAllergies = element.allergies!.split(';');
-        for (var element in personAllergies) {
-          if (element.isNotEmpty) {
-            int amount = int.parse(element.toString().split(',')[0].trim());
-            String allergenType = element.toString().split(',')[1].trim();
-            try {
-              allergens
-                  .firstWhere((item) => item.allergenType == allergenType).amount += amount;
-            } catch (_) {
-              allergens.add(Allergy(amount, allergenType));
-            }
-          }
-        }
-      }
-    }
-  }
+  InfoDialog(this.documents, this.allergens, {super.key});
 
-  final List <Allergy> allergens = [];
+  final List <Allergy> allergens;
   final List <TicketDocument> documents;
 
   final List<Color> gradientColors = [
