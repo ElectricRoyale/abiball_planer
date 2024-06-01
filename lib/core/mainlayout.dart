@@ -74,7 +74,8 @@ class MainLayoutState extends State<MainLayout> {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.only(right: MediaQuery.sizeOf(context).width * 0.008),
+            padding: EdgeInsets.only(
+                right: MediaQuery.sizeOf(context).width * 0.008),
             constraints: const BoxConstraints(maxWidth: 275.0),
             child: Drawer(
               width: MediaQuery.sizeOf(context).width * 0.17,
@@ -312,9 +313,9 @@ class MainLayoutState extends State<MainLayout> {
             ),
           ),
           Expanded(
-            child: DragToMoveArea(
-              child: Column(children: [
-                Row(
+            child: Column(children: [
+              DragToMoveArea(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
@@ -372,132 +373,129 @@ class MainLayoutState extends State<MainLayout> {
                     ),
                   ],
                 ),
-                ManagerProvider(
-                  notifier: stateManager,
-                  child: Expanded(
-                    child: Builder(builder: (context) {
-                      RealtimeDataService().context = context;
-                      return Column(
-                        children: [
-                          Container(
-                            color: Colors.transparent,
-                            margin: EdgeInsets.symmetric(
-                                vertical:
-                                    MediaQuery.sizeOf(context).height * 0.00),
-                            alignment: Alignment.topRight,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Transform.translate(
-                                  offset: Offset(
-                                      MediaQuery.sizeOf(context).width * 0.015,
-                                      0.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+              ),
+              ManagerProvider(
+                notifier: stateManager,
+                child: Expanded(
+                  child: Builder(builder: (context) {
+                    RealtimeDataService().context = context;
+                    return Column(
+                      children: [
+                        Container(
+                          color: Colors.transparent,
+                          margin: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.sizeOf(context).height * 0.00),
+                          alignment: Alignment.topRight,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Transform.translate(
+                                offset: Offset(
+                                    MediaQuery.sizeOf(context).width * 0.015,
+                                    0.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Hi Pascal Reinmuth',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      headlines.elementAt(selectedPage),
+                                      textScaler: const TextScaler.linear(2.0),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                width: MediaQuery.sizeOf(context).width * 0.225,
+                                height:
+                                    MediaQuery.sizeOf(context).height * 0.065,
+                                margin: EdgeInsets.only(
+                                    right: MediaQuery.sizeOf(context).width *
+                                        0.03),
+                                child: AutoCompleteTextField<TicketDocument>(
+                                  decoration: decoration(false),
+                                  onFocusChanged: (focus) =>
+                                      focus ? null : focusNode.requestFocus(),
+                                  suggestions:
+                                      ManagerProvider.of(context).tickets,
+                                  unFocusOnItemSubmitted: true,
+                                  itemSubmitted: (item) {
+                                    ManagerProvider.of(context)
+                                        .search(item.toString());
+                                    focusNode.requestFocus();
+                                  },
+                                  textSubmitted: (item) {
+                                    ManagerProvider.of(context).search(item);
+                                    focusNode.requestFocus();
+                                  },
+                                  clearOnSubmit: false,
+                                  itemBuilder:
+                                      (context, document, selected, last) =>
+                                          Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      const Text(
-                                        'Hi Pascal Reinmuth',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      ListTile(
+                                        title: Text(document.toString()),
+                                        selected: selected,
+                                        selectedColor: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .color,
+                                        tileColor: Colors.white,
+                                        selectedTileColor: Colors.grey.shade200,
                                       ),
-                                      Text(
-                                        headlines.elementAt(selectedPage),
-                                        textScaler:
-                                            const TextScaler.linear(2.0),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                      !last
+                                          ? const Divider(
+                                              height: 0,
+                                              indent: 15,
+                                              endIndent: 15,
+                                            )
+                                          : Container(),
                                     ],
                                   ),
+                                  itemSorter: (a, b) =>
+                                      a.toString().compareTo(b.toString()),
+                                  itemFilter: (document, option) => document
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains(option.toLowerCase()),
                                 ),
-                                Container(
-                                  color: Colors.transparent,
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.225,
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.065,
-                                  margin: EdgeInsets.only(
-                                      right: MediaQuery.sizeOf(context).width *
-                                          0.03),
-                                  child: AutoCompleteTextField<TicketDocument>(
-                                    decoration: decoration(false),
-                                    onFocusChanged: (focus) =>
-                                        focus ? null : focusNode.requestFocus(),
-                                    suggestions:
-                                        ManagerProvider.of(context).tickets,
-                                    unFocusOnItemSubmitted: true,
-                                    itemSubmitted: (item) {
-                                      ManagerProvider.of(context)
-                                          .search(item.toString());
-                                      focusNode.requestFocus();
-                                    },
-                                    textSubmitted: (item) {
-                                      ManagerProvider.of(context).search(item);
-                                      focusNode.requestFocus();
-                                    },
-                                    clearOnSubmit: false,
-                                    itemBuilder:
-                                        (context, document, selected, last) =>
-                                            Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ListTile(
-                                          title: Text(document.toString()),
-                                          selected: selected,
-                                          selectedColor: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge!
-                                              .color,
-                                          tileColor: Colors.white,
-                                          selectedTileColor:
-                                              Colors.grey.shade200,
-                                        ),
-                                        !last
-                                            ? const Divider(
-                                                height: 0,
-                                                indent: 15,
-                                                endIndent: 15,
-                                              )
-                                            : Container(),
-                                      ],
-                                    ),
-                                    itemSorter: (a, b) =>
-                                        a.toString().compareTo(b.toString()),
-                                    itemFilter: (document, option) => document
-                                        .toString()
-                                        .toLowerCase()
-                                        .contains(option.toLowerCase()),
-                                  ),
-                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.sizeOf(context).height * 0.02),
+                            child: PageView(
+                              controller: controller,
+                              onPageChanged: (index) =>
+                                  setState(() => selectedPage = index),
+                              children: [
+                                Container(),
+                                Container(),
+                                CardsOverview(focusNode),
+                                Container(),
+                                const EmailView(),
                               ],
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.02),
-                              child: PageView(
-                                controller: controller,
-                                onPageChanged: (index) =>
-                                    setState(() => selectedPage = index),
-                                children: [
-                                  Container(),
-                                  Container(),
-                                  CardsOverview(focusNode),
-                                  Container(),
-                                  const EmailView(),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
-                  ),
+                        ),
+                      ],
+                    );
+                  }),
                 ),
-              ]),
-            ),
+              ),
+            ]),
           ),
         ],
       ),

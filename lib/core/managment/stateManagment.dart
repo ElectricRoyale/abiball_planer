@@ -28,6 +28,7 @@ class StateManager with ChangeNotifier {
           visitor['place_number'],
           visitor['money']));
     }
+    allergens.clear();
     for (var element in tickets) {
       if (element.allergies != null) {
         List personAllergies = element.allergies!.split(';');
@@ -46,6 +47,7 @@ class StateManager with ChangeNotifier {
       }
     }
     tickets.sort((a, b) => a.toString().compareTo(b.toString()));
+    allergens.sort((a, b) => a.allergenType.compareTo(b.allergenType));
     search(searchValue);
     notifyListeners();
   }
@@ -67,6 +69,25 @@ class StateManager with ChangeNotifier {
         visitor['money']));
     tickets.sort((a, b) => a.toString().compareTo(b.toString()));
     search(searchValue);
+    allergens.clear();
+    for (var element in tickets) {
+      if (element.allergies != null) {
+        List personAllergies = element.allergies!.split(';');
+        for (var element in personAllergies) {
+          if (element.isNotEmpty) {
+            int amount = int.parse(element.toString().split(',')[0].trim());
+            String allergenType = element.toString().split(',')[1].trim();
+            try {
+              allergens
+                  .firstWhere((item) => item.allergenType == allergenType).amount += amount;
+            } catch (_) {
+              allergens.add(Allergy(amount, allergenType));
+            }
+          }
+        }
+      }
+    }
+    allergens.sort((a, b) => a.allergenType.compareTo(b.allergenType));
     notifyListeners();
   }
 
@@ -77,6 +98,25 @@ class StateManager with ChangeNotifier {
         (item.firstname == visitor['firstname'] &&
             item.lastname == visitor['lastname'])));
     document.fromMap(visitor);
+    allergens.clear();
+    for (var element in tickets) {
+      if (element.allergies != null) {
+        List personAllergies = element.allergies!.split(';');
+        for (var element in personAllergies) {
+          if (element.isNotEmpty) {
+            int amount = int.parse(element.toString().split(',')[0].trim());
+            String allergenType = element.toString().split(',')[1].trim();
+            try {
+              allergens
+                  .firstWhere((item) => item.allergenType == allergenType).amount += amount;
+            } catch (_) {
+              allergens.add(Allergy(amount, allergenType));
+            }
+          }
+        }
+      }
+    }
+    allergens.sort((a, b) => a.allergenType.compareTo(b.allergenType));
     notifyListeners();
   }
 
