@@ -11,8 +11,8 @@ import 'allergens_widget.dart';
 class InfoDialog extends StatelessWidget {
   InfoDialog(this.documents, this.allergens, {super.key});
 
-  final List <Allergy> allergens;
-  final List <TicketDocument> documents;
+  final List<Allergy> allergens;
+  final List<TicketDocument> documents;
 
   final List<Color> gradientColors = [
     Colors.lightGreen,
@@ -81,28 +81,28 @@ class InfoDialog extends StatelessWidget {
       ];
 
   List<PieSeries<StatisticData, String>> _getPieSeries() => [
-    PieSeries<StatisticData, String>(
-      dataSource: <StatisticData>[
-        StatisticData(
-          'meat',
-          meatAmount(documents),
-        ),
-        StatisticData(
-          'vegetarian',
-          vegetarianAmount(documents),
-        ),
-        StatisticData(
-          'vegan',
-          veganAmount(documents),
-        ),
-      ],
-      radius: '105%',
-      animationDuration: 700,
-      xValueMapper: (StatisticData data, _) => data.x,
-      yValueMapper: (StatisticData data, _) => data.y,
-      enableTooltip: false,
-    )
-  ];
+        PieSeries<StatisticData, String>(
+          dataSource: <StatisticData>[
+            StatisticData(
+              'meat',
+              meatAmount(documents),
+            ),
+            StatisticData(
+              'vegetarian',
+              vegetarianAmount(documents),
+            ),
+            StatisticData(
+              'vegan',
+              veganAmount(documents),
+            ),
+          ],
+          radius: '105%',
+          animationDuration: 700,
+          xValueMapper: (StatisticData data, _) => data.x,
+          yValueMapper: (StatisticData data, _) => data.y,
+          enableTooltip: false,
+        )
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +118,8 @@ class InfoDialog extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.018),
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.018),
         child: Column(
           children: [
             Expanded(
@@ -154,13 +155,11 @@ class InfoDialog extends StatelessWidget {
                                         fontSize: 18),
                                   ),
                                   Text(
-                                    'Ausgaben: ${intl.NumberFormat.currency(locale: 'eu', symbol: '€')
-                                        .format(minMoney(soldCards(documents)))}',
+                                    'Ausgaben: ${intl.NumberFormat.currency(locale: 'eu', symbol: '€').format(minMoney(soldCards(documents)))}',
                                     textScaler: const TextScaler.linear(0.8),
                                   ),
                                   Text(
-                                    'Einnahmen: ${intl.NumberFormat.currency(locale: 'eu', symbol: '€')
-                                        .format(money(documents))}',
+                                    'Einnahmen: ${intl.NumberFormat.currency(locale: 'eu', symbol: '€').format(money(documents))}',
                                     textScaler: const TextScaler.linear(0.8),
                                   ),
                                   Text(
@@ -173,16 +172,16 @@ class InfoDialog extends StatelessWidget {
                           ],
                           onCreateShader:
                               (ChartShaderDetails chartShaderDetails) =>
-                              ui.Gradient.sweep(
-                                chartShaderDetails.outerRect.center,
-                                gradientColors,
-                                stops,
-                                TileMode.clamp,
-                                _degreeToRadian(0),
-                                _degreeToRadian(360),
-                                _resolveTransform(chartShaderDetails.outerRect,
-                                    TextDirection.ltr),
-                              ),
+                                  ui.Gradient.sweep(
+                            chartShaderDetails.outerRect.center,
+                            gradientColors,
+                            stops,
+                            TileMode.clamp,
+                            _degreeToRadian(0),
+                            _degreeToRadian(360),
+                            _resolveTransform(chartShaderDetails.outerRect,
+                                TextDirection.ltr),
+                          ),
                           series: _getMoneySeries(),
                         ),
                       ],
@@ -229,16 +228,16 @@ class InfoDialog extends StatelessWidget {
                           ],
                           onCreateShader:
                               (ChartShaderDetails chartShaderDetails) =>
-                              ui.Gradient.sweep(
-                                chartShaderDetails.outerRect.center,
-                                gradientColors,
-                                stops,
-                                TileMode.clamp,
-                                _degreeToRadian(0),
-                                _degreeToRadian(360),
-                                _resolveTransform(chartShaderDetails.outerRect,
-                                    TextDirection.ltr),
-                              ),
+                                  ui.Gradient.sweep(
+                            chartShaderDetails.outerRect.center,
+                            gradientColors,
+                            stops,
+                            TileMode.clamp,
+                            _degreeToRadian(0),
+                            _degreeToRadian(360),
+                            _resolveTransform(chartShaderDetails.outerRect,
+                                TextDirection.ltr),
+                          ),
                           series: _getRadialBarGradientSeries(),
                         ),
                       ],
@@ -292,7 +291,8 @@ class InfoDialog extends StatelessWidget {
             Expanded(
               flex: 5,
               child: Padding(
-                padding: EdgeInsets.only(bottom: MediaQuery.sizeOf(context).height * 0.02),
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.sizeOf(context).height * 0.02),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -300,110 +300,114 @@ class InfoDialog extends StatelessWidget {
                       padding: EdgeInsets.only(left: 15.0, bottom: 5.0),
                       child: Text(
                         'Allergene:',
-                        style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius: BorderRadius.circular(14.0),
-                              color: const Color.fromARGB(255, 240, 240, 240)),
-                          clipBehavior: Clip.hardEdge,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 215, 215, 215),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Color.fromARGB(255, 160, 160, 160),
-                                          blurRadius: 4,
-                                          blurStyle: BlurStyle.solid,
-                                          offset: Offset(0.0, 0.1),
-                                          spreadRadius: 1),
-                                    ],
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.black, width: 1)),
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(14),
-                                        topRight: Radius.circular(14)),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 16.0),
-                                    child: Row(
-                                      children: [
-                                        const Expanded(
-                                          flex: 3,
-                                          child: Text(
-                                            'Anzahl',
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(14.0),
+                            color: const Color.fromARGB(255, 240, 240, 240)),
+                        clipBehavior: Clip.hardEdge,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 215, 215, 215),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color:
+                                            Color.fromARGB(255, 160, 160, 160),
+                                        blurRadius: 4,
+                                        blurStyle: BlurStyle.solid,
+                                        offset: Offset(0.0, 0.1),
+                                        spreadRadius: 1),
+                                  ],
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: Colors.black, width: 1)),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(14),
+                                      topRight: Radius.circular(14)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 16.0),
+                                  child: Row(
+                                    children: [
+                                      const Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          'Anzahl',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(),
+                                      ),
+                                      const Expanded(
+                                        flex: 36,
+                                        child: Text('Allergie',
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Container(),
-                                        ),
-                                        const Expanded(
-                                          flex: 36,
-                                          child: Text('Allergie',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                      ],
-                                    ),
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                flex: 16,
-                                child: ListView.separated(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, top: 5, bottom: 10.0),
-                                    itemBuilder: (context, index) => Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0, top: 3.0),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: Text(
-                                              allergens
-                                                  .elementAt(index).amount
-                                                  .toString(),
-                                              textAlign: TextAlign.center,
+                            ),
+                            Expanded(
+                              flex: 16,
+                              child: ListView.separated(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, top: 5, bottom: 10.0),
+                                  itemBuilder: (context, index) => Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, top: 3.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                allergens
+                                                    .elementAt(index)
+                                                    .amount
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 3,
-                                            child: Container(),
-                                          ),
-                                          Expanded(
-                                            flex: 36,
-                                            child: Text(
-                                              allergens
-                                                  .elementAt(index).allergenType,
+                                            Expanded(
+                                              flex: 3,
+                                              child: Container(),
                                             ),
-                                          ),
-                                        ],
+                                            Expanded(
+                                              flex: 36,
+                                              child: Text(
+                                                allergens
+                                                    .elementAt(index)
+                                                    .allergenType,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    separatorBuilder: (context, index) =>
-                                    const Divider(
-                                      color: Colors.black,
-                                      indent: 5,
-                                      endIndent: 5,
-                                    ),
-                                    itemCount: allergens.length),
-                              ),
-                            ],
-                          ),),
+                                  separatorBuilder: (context, index) =>
+                                      const Divider(
+                                        color: Colors.black,
+                                        indent: 5,
+                                        endIndent: 5,
+                                      ),
+                                  itemCount: allergens.length),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

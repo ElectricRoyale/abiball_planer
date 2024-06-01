@@ -1,18 +1,12 @@
 import 'dart:ui' as ui;
 
+import 'package:abiball_planer/core/route/cards/allergens_widget.dart';
 import 'package:abiball_planer/core/route/cards/info_dialog.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:syncfusion_flutter_charts/charts.dart';
-
-import 'allergens_widget.dart';
 
 class Statistics extends StatelessWidget {
   Statistics(this.documents, this.allergens, {super.key});
@@ -332,7 +326,8 @@ class Statistics extends StatelessWidget {
       height: MediaQuery.sizeOf(context).height * 0.18,
       width: MediaQuery.sizeOf(context).width,
       constraints: const BoxConstraints(maxHeight: 150),
-      margin: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.01),
+      margin: EdgeInsets.symmetric(
+          horizontal: MediaQuery.sizeOf(context).width * 0.01),
       decoration: BoxDecoration(
         gradient: const LinearGradient(colors: [
           Color(0xFF237FEA),
@@ -355,9 +350,9 @@ class Statistics extends StatelessWidget {
       child: LayoutBuilder(builder: (context, constraints) {
         return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Container(
-            width: (constraints.maxWidth / 5) * 0.75,
-            constraints: const BoxConstraints(maxWidth: 250, minWidth: 150),
-           /* margin: EdgeInsets.only(
+            width: (constraints.maxWidth / 5) * 0.95,
+            constraints: const BoxConstraints(maxWidth: 225, minWidth: 150),
+            /* margin: EdgeInsets.only(
                 left: MediaQuery.sizeOf(context).width * 0.01,
                 right: MediaQuery.sizeOf(context).width * 0.01),*/
             child: Column(
