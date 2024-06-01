@@ -337,10 +337,6 @@ class InfoDialog extends StatelessWidget {
                                     padding: const EdgeInsets.only(left: 16.0),
                                     child: Row(
                                       children: [
-                                        Expanded(
-                                          flex: 3,
-                                          child: Container(),
-                                        ),
                                         const Expanded(
                                           flex: 3,
                                           child: Text(
@@ -375,12 +371,6 @@ class InfoDialog extends StatelessWidget {
                                           left: 8.0, top: 3.0),
                                       child: Row(
                                         children: [
-                                          Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                '${index + 1}.',
-                                                textAlign: TextAlign.center,
-                                              )),
                                           Expanded(
                                             flex: 3,
                                             child: Text(

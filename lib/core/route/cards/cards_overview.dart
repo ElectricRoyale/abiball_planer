@@ -71,7 +71,7 @@ class CardsOverview extends StatelessWidget {
               )..setStatisticData(),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(20.0, MediaQuery.sizeOf(context).height * 0.03, 20.0, 16.0),
+                  margin: EdgeInsets.fromLTRB(MediaQuery.sizeOf(context).width * 0.01, MediaQuery.sizeOf(context).height * 0.03, MediaQuery.sizeOf(context).width * 0.01, 16.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),

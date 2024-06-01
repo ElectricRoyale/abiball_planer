@@ -332,9 +332,9 @@ class Statistics extends StatelessWidget {
       height: MediaQuery.sizeOf(context).height * 0.18,
       width: MediaQuery.sizeOf(context).width,
       constraints: const BoxConstraints(maxHeight: 150),
-      margin: const EdgeInsets.symmetric(horizontal: 20.0),
+      margin: EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.01),
       padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.sizeOf(context).width * 0.003),
+          horizontal: MediaQuery.sizeOf(context).width * 0.013),
       decoration: BoxDecoration(
         gradient: const LinearGradient(colors: [
           Color(0xFF237FEA),
@@ -355,13 +355,13 @@ class Statistics extends StatelessWidget {
         ],
       ),
       child: LayoutBuilder(builder: (context, constraints) {
-        return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(
-            width: (constraints.maxWidth / 5) * 0.7,
+            width: (constraints.maxWidth / 5) * 0.75,
             constraints: const BoxConstraints(maxWidth: 250, minWidth: 150),
-            margin: EdgeInsets.only(
+           /* margin: EdgeInsets.only(
                 left: MediaQuery.sizeOf(context).width * 0.01,
-                right: MediaQuery.sizeOf(context).width * 0.01),
+                right: MediaQuery.sizeOf(context).width * 0.01),*/
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
