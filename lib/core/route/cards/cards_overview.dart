@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:abiball_planer/core/managment/managerProvider.dart';
+import 'package:abiball_planer/core/managment/managerProviderStudents.dart';
 import 'package:abiball_planer/core/route/cards/add_dialog.dart';
 import 'package:abiball_planer/core/route/cards/edit_dialog.dart';
 import 'package:abiball_planer/core/route/cards/statistics.dart';
@@ -24,7 +24,7 @@ class CardsOverview extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
           child: AddDialogLayout(
-            soldCards(ManagerProvider.of(context).tickets),
+            soldCards(ManagerProviderStudents.of(context).tickets),
           ),
         ),
       );
@@ -38,8 +38,8 @@ class CardsOverview extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 900.0, maxHeight: 650.0),
           child: EditDialogLayout(
-            soldCards(ManagerProvider.of(context).viewTickets),
-            ManagerProvider.of(context).viewTickets.elementAt(index),
+            soldCards(ManagerProviderStudents.of(context).viewTickets),
+            ManagerProviderStudents.of(context).viewTickets.elementAt(index),
           ),
         ),
       );
@@ -66,8 +66,8 @@ class CardsOverview extends StatelessWidget {
           child: Column(
             children: [
               Statistics(
-                ManagerProvider.of(context).tickets,
-                ManagerProvider.of(context).allergens,
+                ManagerProviderStudents.of(context).tickets,
+                ManagerProviderStudents.of(context).allergens,
               )..setStatisticData(),
               Expanded(
                 child: Container(
@@ -97,23 +97,23 @@ class CardsOverview extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     String direction =
-                                        ManagerProvider.of(context).direction;
-                                    if (ManagerProvider.of(context).sortBy !=
+                                        ManagerProviderStudents.of(context).direction;
+                                    if (ManagerProviderStudents.of(context).sortBy !=
                                             'firstname' &&
-                                        ManagerProvider.of(context).sortBy !=
+                                        ManagerProviderStudents.of(context).sortBy !=
                                             'lastname') {
                                       direction = 'asc';
                                     }
-                                    if (ManagerProvider.of(context).sortBy ==
+                                    if (ManagerProviderStudents.of(context).sortBy ==
                                         'lastname') {
-                                      direction = ManagerProvider.of(context)
+                                      direction = ManagerProviderStudents.of(context)
                                                   .direction ==
                                               'asc'
                                           ? 'desc'
                                           : 'asc';
                                     }
-                                    ManagerProvider.of(context).sort(
-                                        ManagerProvider.of(context).sortBy ==
+                                    ManagerProviderStudents.of(context).sort(
+                                        ManagerProviderStudents.of(context).sortBy ==
                                                 'firstname'
                                             ? 'lastname'
                                             : 'firstname',
@@ -124,13 +124,13 @@ class CardsOverview extends StatelessWidget {
                                       const Text('Name',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      ManagerProvider.of(context).sortBy ==
+                                      ManagerProviderStudents.of(context).sortBy ==
                                                   'firstname' ||
-                                              ManagerProvider.of(context)
+                                              ManagerProviderStudents.of(context)
                                                       .sortBy ==
                                                   'lastname'
                                           ? Icon(
-                                              ManagerProvider.of(context)
+                                              ManagerProviderStudents.of(context)
                                                           .direction ==
                                                       'asc'
                                                   ? Icons
@@ -148,11 +148,11 @@ class CardsOverview extends StatelessWidget {
                                 flex: 8,
                                 child: InkWell(
                                   onTap: () {
-                                    ManagerProvider.of(context).sort(
+                                    ManagerProviderStudents.of(context).sort(
                                         'neighbourWish',
-                                        ManagerProvider.of(context).direction ==
+                                        ManagerProviderStudents.of(context).direction ==
                                                     'asc' &&
-                                                ManagerProvider.of(context)
+                                                ManagerProviderStudents.of(context)
                                                         .sortBy ==
                                                     'neighbourWish'
                                             ? 'desc'
@@ -164,10 +164,10 @@ class CardsOverview extends StatelessWidget {
                                       const Text('Sitznachbar wunsch',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      ManagerProvider.of(context).sortBy ==
+                                      ManagerProviderStudents.of(context).sortBy ==
                                               'neighbourWish'
                                           ? Icon(
-                                              ManagerProvider.of(context)
+                                              ManagerProviderStudents.of(context)
                                                           .direction ==
                                                       'asc'
                                                   ? Icons
@@ -185,11 +185,11 @@ class CardsOverview extends StatelessWidget {
                                 flex: 2,
                                 child: InkWell(
                                   onTap: () {
-                                    ManagerProvider.of(context).sort(
+                                    ManagerProviderStudents.of(context).sort(
                                         'placeNumber',
-                                        ManagerProvider.of(context).direction ==
+                                        ManagerProviderStudents.of(context).direction ==
                                                     'asc' &&
-                                                ManagerProvider.of(context)
+                                                ManagerProviderStudents.of(context)
                                                         .sortBy ==
                                                     'placeNumber'
                                             ? 'desc'
@@ -209,11 +209,11 @@ class CardsOverview extends StatelessWidget {
                                         ),
                                       ),
                                       Flexible(
-                                        child: ManagerProvider.of(context)
+                                        child: ManagerProviderStudents.of(context)
                                                     .sortBy ==
                                                 'placeNumber'
                                             ? Icon(
-                                                ManagerProvider.of(context)
+                                                ManagerProviderStudents.of(context)
                                                             .direction ==
                                                         'asc'
                                                     ? Icons
@@ -234,11 +234,11 @@ class CardsOverview extends StatelessWidget {
                                 flex: 3,
                                 child: InkWell(
                                   onTap: () {
-                                    ManagerProvider.of(context).sort(
+                                    ManagerProviderStudents.of(context).sort(
                                         'cards',
-                                        ManagerProvider.of(context).direction ==
+                                        ManagerProviderStudents.of(context).direction ==
                                                     'asc' &&
-                                                ManagerProvider.of(context)
+                                                ManagerProviderStudents.of(context)
                                                         .sortBy ==
                                                     'cards'
                                             ? 'desc'
@@ -252,10 +252,10 @@ class CardsOverview extends StatelessWidget {
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                           overflow: TextOverflow.ellipsis),
-                                      ManagerProvider.of(context).sortBy ==
+                                      ManagerProviderStudents.of(context).sortBy ==
                                               'cards'
                                           ? Icon(
-                                              ManagerProvider.of(context)
+                                              ManagerProviderStudents.of(context)
                                                           .direction ==
                                                       'asc'
                                                   ? Icons
@@ -277,11 +277,11 @@ class CardsOverview extends StatelessWidget {
                                 flex: 3,
                                 child: InkWell(
                                   onTap: () {
-                                    ManagerProvider.of(context).sort(
+                                    ManagerProviderStudents.of(context).sort(
                                         'payed',
-                                        ManagerProvider.of(context).direction ==
+                                        ManagerProviderStudents.of(context).direction ==
                                                     'asc' &&
-                                                ManagerProvider.of(context)
+                                                ManagerProviderStudents.of(context)
                                                         .sortBy ==
                                                     'payed'
                                             ? 'desc'
@@ -292,11 +292,11 @@ class CardsOverview extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
-                                        ManagerProvider.of(context).direction ==
+                                        ManagerProviderStudents.of(context).direction ==
                                                 'asc'
                                             ? Icons.keyboard_arrow_down_rounded
                                             : Icons.keyboard_arrow_up_rounded,
-                                        color: ManagerProvider.of(context)
+                                        color: ManagerProviderStudents.of(context)
                                                     .sortBy ==
                                                 'payed'
                                             ? Colors.black
@@ -314,7 +314,7 @@ class CardsOverview extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: ManagerProvider.of(context)
+                        child: ManagerProviderStudents.of(context)
                                 .viewTickets
                                 .isNotEmpty
                             ? ListView.separated(
@@ -329,7 +329,7 @@ class CardsOverview extends StatelessWidget {
                                       onSecondaryTap: () =>
                                           deleteItem(context, layerLink, () {
                                         RealtimeDataService().deleteVisitor(
-                                            ManagerProvider.of(context)
+                                            ManagerProviderStudents.of(context)
                                                 .viewTickets
                                                 .elementAt(index)
                                                 .conditions);
@@ -337,7 +337,7 @@ class CardsOverview extends StatelessWidget {
                                       onLongPress: () =>
                                           deleteItem(context, layerLink, () {
                                         RealtimeDataService().deleteVisitor(
-                                            ManagerProvider.of(context)
+                                            ManagerProviderStudents.of(context)
                                                 .viewTickets
                                                 .elementAt(index)
                                                 .getDocumentMap());
@@ -370,7 +370,7 @@ class CardsOverview extends StatelessWidget {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        ManagerProvider.of(
+                                                        ManagerProviderStudents.of(
                                                                 context)
                                                             .viewTickets
                                                             .elementAt(index)
@@ -384,7 +384,7 @@ class CardsOverview extends StatelessWidget {
                                                         ),
                                                       ),
                                                       Text(
-                                                        ManagerProvider.of(
+                                                        ManagerProviderStudents.of(
                                                                 context)
                                                             .viewTickets
                                                             .elementAt(index)
@@ -405,7 +405,7 @@ class CardsOverview extends StatelessWidget {
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 10.0),
                                                 child: Text(
-                                                  ManagerProvider.of(context)
+                                                  ManagerProviderStudents.of(context)
                                                           .viewTickets
                                                           .elementAt(index)
                                                           .neighbourWish ??
@@ -423,7 +423,7 @@ class CardsOverview extends StatelessWidget {
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 10.0),
                                                 child: Text(
-                                                  ManagerProvider.of(context)
+                                                  ManagerProviderStudents.of(context)
                                                           .viewTickets
                                                           .elementAt(index)
                                                           .placeNumber ??
@@ -442,7 +442,7 @@ class CardsOverview extends StatelessWidget {
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 10.0),
                                                 child: Text(
-                                                  '${ManagerProvider.of(context).viewTickets.elementAt(index).numberOfHardCards}/${ManagerProvider.of(context).tickets.elementAt(index).numberOfTickets}',
+                                                  '${ManagerProviderStudents.of(context).viewTickets.elementAt(index).numberOfHardCards}/${ManagerProviderStudents.of(context).tickets.elementAt(index).numberOfTickets}',
                                                   textAlign: TextAlign.center,
                                                   textScaler:
                                                       const TextScaler.linear(
@@ -457,7 +457,7 @@ class CardsOverview extends StatelessWidget {
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 10.0),
                                                 child: OutlinedButton(
-                                                  onPressed: ManagerProvider.of(
+                                                  onPressed: ManagerProviderStudents.of(
                                                               context)
                                                           .viewTickets
                                                           .elementAt(index)
@@ -466,7 +466,7 @@ class CardsOverview extends StatelessWidget {
                                                       : null,
                                                   style: OutlinedButton.styleFrom(
                                                       side: BorderSide(
-                                                          color: ManagerProvider
+                                                          color: ManagerProviderStudents
                                                                       .of(
                                                                           context)
                                                                   .viewTickets
@@ -498,7 +498,7 @@ class CardsOverview extends StatelessWidget {
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 10.0),
                                                 child: Checkbox(
-                                                    value: ManagerProvider.of(
+                                                    value: ManagerProviderStudents.of(
                                                             context)
                                                         .viewTickets
                                                         .elementAt(index)
@@ -511,7 +511,7 @@ class CardsOverview extends StatelessWidget {
                                                     ),
                                                     onChanged: (payed) {
                                                       TicketDocument document =
-                                                          ManagerProvider.of(
+                                                          ManagerProviderStudents.of(
                                                                   context)
                                                               .viewTickets
                                                               .elementAt(index);
@@ -544,7 +544,7 @@ class CardsOverview extends StatelessWidget {
                                       endIndent: 20.0,
                                       height: 3.5,
                                     ),
-                                itemCount: ManagerProvider.of(context)
+                                itemCount: ManagerProviderStudents.of(context)
                                     .viewTickets
                                     .length)
                             : const Center(

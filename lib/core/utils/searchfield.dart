@@ -1,6 +1,6 @@
 library autocomplete_textfield;
 
-import 'package:abiball_planer/core/managment/managerProvider.dart';
+import 'package:abiball_planer/core/managment/managerProviderStudents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -207,7 +207,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
     controller!.clear();
     currentText = "";
     updateOverlay();
-    ManagerProvider.of(context).search(null);
+    ManagerProviderStudents.of(context).search(null);
     focusNode!.unfocus();
   }
 

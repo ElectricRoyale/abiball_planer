@@ -33,10 +33,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.10+1
   window_manager: ^0.3.9
-  syncfusion_flutter_charts: ^25.2.6
+  syncfusion_flutter_charts: ^26.1.38
   intl: ^0.19.0
-  mailer: ^6.1.0
   flutter_launcher_icons: ^0.13.1
+  enough_mail: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -57,14 +57,14 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/logo.jpeg"
+  image_path: "assets/logo.png"
   windows:
     generate: true
-    image_path: "assets/logo.jpeg"
+    image_path: "assets/logo.png"
     icon_size: 48
   macos:
     generate: true
-    image_path: "assets/logo.jpeg"
+    image_path: "assets/logo.png"
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -74,7 +74,7 @@ flutter:
 
   assets:
     - assets/BOD_R.ttf
-    - assets/logo.jpeg
+    - assets/logo.png
     - assets/person.jpeg
     - assets/error.svg
 

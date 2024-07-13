@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../route/cards/allergens_widget.dart';
 
-class StateManager with ChangeNotifier {
+class StateManagerStudents with ChangeNotifier {
   List<TicketDocument> tickets = [];
   List<TicketDocument> viewTickets = [];
   String? searchValue;

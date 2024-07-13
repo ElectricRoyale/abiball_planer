@@ -1,9 +1,12 @@
+import 'package:abiball_planer/core/managment/managerProviderEmail.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/utils/searchfield.dart';
 import 'package:flutter/material.dart';
 
 class EmailView extends StatefulWidget {
-  const EmailView({super.key});
+  const EmailView(this.focusNode, {super.key});
+
+  final FocusNode focusNode;
 
   @override
   State createState() => _EmailViewState();
@@ -13,17 +16,6 @@ class _EmailViewState extends State<EmailView> {
   GlobalKey<AutoCompleteTextFieldState<TicketDocument>> key =
       GlobalKey<AutoCompleteTextFieldState<TicketDocument>>();
   FocusNode focusNode = FocusNode();
-
-  List<TicketDocument> items = [
-    TicketDocument('Pascal', 'Reinmuth', 'Pascal.Reinmuth@web.de', 7, 2,
-        'Schultz', 7, 0, 0, 'Keine', false, '', 273),
-    TicketDocument('Paulina', 'Schultz', 'Paulina.Schultz@t-online.de', 5, 1,
-        'Reinmuth', 5, 0, 0, 'Keine', false, '', 273),
-    TicketDocument('Test', 'Test', 'test.test@web.de', 7, 2, 'Mustermann', 7, 0,
-        0, 'Keine', false, '', 273),
-    TicketDocument('Max', 'Mustermann', 'Max.Mustermann@web.de', 7, 2, 'test',
-        7, 0, 0, 'Keine', false, '', 273),
-  ];
 
   @override
   void initState() {
@@ -56,7 +48,7 @@ class _EmailViewState extends State<EmailView> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
                     decoration: BoxDecoration(
                         border: Border(
                             bottom: BorderSide(color: Colors.grey.shade300))),
@@ -64,79 +56,30 @@ class _EmailViewState extends State<EmailView> {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Row(
                         children: [
-                          Expanded(
-                            flex: 7,
-                            child: InkWell(
-                              onTap: () {
-                                /* sortNames = true;
-                                updateItems();*/
-                              },
-                              child: const Row(
-                                children: [
-                                  Text('Name',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Icon(Icons.keyboard_arrow_down_rounded,
-                                      color: Colors
-                                          .black /*sortNames
-                                        ? Colors.black
-                                        : Colors.transparent,*/
-                                      ),
-                                ],
+                          const Text(
+                            'Inboxing',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                            textScaler: TextScaler.linear(1.5),
+                          ),
+                          DropdownButtonHideUnderline(child: DropdownButton(
+                            items: const [
+                              DropdownMenuItem(
+                                value: 'all',
+                                child: Text('All'),
                               ),
-                            ),
-                          ),
-                          const Expanded(
-                            flex: 8,
-                            child: Text('Sitznachbar wünsche',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                          const Expanded(
-                            flex: 2,
-                            child: Text('Sitzplatz',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                          const Expanded(
-                            flex: 3,
-                            child: Text('Hart-/Karten ',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ),
-                          const Expanded(
-                            flex: 2,
-                            child: Text(''),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: InkWell(
-                              onTap: () {
-                                /* sortNames = false;
-                                updateItems();*/
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.01,
-                                  ),
-                                  const Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: Colors
-                                        .transparent, /*sortNames
-                                        ? Colors.transparent
-                                        : Colors.black,*/
-                                  ),
-                                  const Text(
-                                    'Bezahlt',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
+                              DropdownMenuItem(
+                                value: 'unread',
+                                child: Text('Unread'),
                               ),
-                            ),
-                          ),
+                              DropdownMenuItem(
+                                value: 'read',
+                                child: Text('Read'),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              //ManagerProviderEmail.of(context).filterMails(value);
+                            },
+                          )),
                         ],
                       ),
                     ),
@@ -176,40 +119,34 @@ class _EmailViewState extends State<EmailView> {
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Row(
                                   children: [
-                                    Expanded(
+                                    /*Expanded(
                                       flex: 2,
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10.0),
                                         child: Checkbox(
-                                            value: items.elementAt(index).payed,
+                                            value: ManagerProviderEmail.of(context).viewMails.elementAt(index).payed,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(4),
                                             ),
                                             onChanged: (selected) {}),
                                       ),
-                                    ),
+                                    ),*/
                                     Expanded(
                                       flex: 7,
                                       child: Row(
                                         children: [
-                                          Text(
-                                            '${index + 1}.',
-                                            textScaler:
-                                                const TextScaler.linear(1.15),
-                                          ),
-                                          const SizedBox(
-                                            width: 10.0,
-                                          ),
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                items
+                                                ManagerProviderEmail.of(context)
+                                                    .viewMails
                                                     .elementAt(index)
-                                                    .toString(),
+                                                    .from!
+                                                    .join(', '),
                                                 textScaler:
                                                     const TextScaler.linear(
                                                         1.15),
@@ -218,7 +155,10 @@ class _EmailViewState extends State<EmailView> {
                                                 ),
                                               ),
                                               Text(
-                                                items.elementAt(index).email,
+                                                ManagerProviderEmail.of(context)
+                                                    .viewMails
+                                                    .elementAt(index)
+                                                    .decodeTextHtmlPart()!,
                                                 textScaler:
                                                     const TextScaler.linear(
                                                         0.85),
@@ -234,65 +174,13 @@ class _EmailViewState extends State<EmailView> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10.0),
                                         child: Text(
-                                          items
-                                                  .elementAt(index)
-                                                  .neighbourWish ??
-                                              '--',
+                                          ManagerProviderEmail.of(context)
+                                              .viewMails
+                                              .elementAt(index)
+                                              .decodeDate()
+                                              .toString(),
                                           textScaler:
                                               const TextScaler.linear(1.05),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                        child: Text(
-                                          items.elementAt(index).placeNumber ??
-                                              '--',
-                                          textAlign: TextAlign.center,
-                                          textScaler:
-                                              const TextScaler.linear(1.05),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 3,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                        child: Text(
-                                          '${items.elementAt(index).numberOfHardCards}/${items.elementAt(index).numberOfTickets}',
-                                          textAlign: TextAlign.center,
-                                          textScaler:
-                                              const TextScaler.linear(1.05),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 3,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                        child: OutlinedButton(
-                                          onPressed: () {},
-                                          style: OutlinedButton.styleFrom(
-                                              side: BorderSide(
-                                                  color: items
-                                                          .elementAt(index)
-                                                          .payed
-                                                      ? Theme.of(context)
-                                                          .primaryColor
-                                                      : Theme.of(context)
-                                                          .disabledColor)),
-                                          child: const Text(
-                                            'Resend',
-                                            textAlign: TextAlign.center,
-                                            textScaler: TextScaler.linear(1.05),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
                                         ),
                                       ),
                                     ),
@@ -305,7 +193,8 @@ class _EmailViewState extends State<EmailView> {
                               endIndent: 20.0,
                               height: 3.5,
                             ),
-                        itemCount: items.length),
+                        itemCount:
+                            ManagerProviderEmail.of(context).viewMails.length),
                   ),
                 ],
               ),

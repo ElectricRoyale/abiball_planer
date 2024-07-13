@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:abiball_planer/core/mainlayout.dart';
-import 'package:abiball_planer/core/managment/managerProvider.dart';
+import 'package:abiball_planer/core/managment/managerProviderStudents.dart';
 import 'package:abiball_planer/core/route/cards/add_dialog.dart';
 import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/route/error_dialog.dart';
@@ -16,9 +16,6 @@ class RealtimeDataService {
   static final RealtimeDataService _instance = RealtimeDataService._internal();
 
   BuildContext? context;
-
-  StreamController<String> streamController =
-  StreamController.broadcast(sync: true);
 
   String wsUrl = "ws://192.168.0.131:8000/ws";
   WebSocket? _channel;
@@ -50,14 +47,14 @@ class RealtimeDataService {
       if (context != null) {
         switch (dataMap["type"]) {
           case 'getVisitors':
-            ManagerProvider.of(context!).addAll(dataMap["args"]);
+            ManagerProviderStudents.of(context!).addAll(dataMap["args"]);
             break;
           case 'getSingleVisitor':
-            ManagerProvider.of(context!)
+            ManagerProviderStudents.of(context!)
                 .update(dataMap["args"].first, dataMap["condition"]);
             break;
           case 'insert':
-            ManagerProvider.of(context!).insert(dataMap["args"].first);
+            ManagerProviderStudents.of(context!).insert(dataMap["args"].first);
             break;
           case 'error':
             if (dataMap["caused"] == 'insert') {
@@ -100,7 +97,7 @@ class RealtimeDataService {
                                     MediaQuery.of(context).size.height *
                                         0.1),
                                 child: AddDialogLayout(
-                                  soldCards(ManagerProvider.of(this.context!)
+                                  soldCards(ManagerProviderStudents.of(this.context!)
                                       .tickets),
                                   document: TicketDocument(
                                       dataMap['args']['firstname'],
@@ -135,11 +132,11 @@ class RealtimeDataService {
             }
             break;
           case 'update':
-            ManagerProvider.of(context!)
+            ManagerProviderStudents.of(context!)
                 .update(dataMap["args"].first, dataMap["condition"]);
             break;
           case 'delete':
-            ManagerProvider.of(context!).delete(dataMap["args"].first);
+            ManagerProviderStudents.of(context!).delete(dataMap["args"].first);
             break;
           default:
             break;
