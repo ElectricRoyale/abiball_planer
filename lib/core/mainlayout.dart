@@ -2,7 +2,6 @@ import 'package:abiball_planer/core/managment/managerProviderStudents.dart';
 import 'package:abiball_planer/core/managment/stateManagementEmail.dart';
 import 'package:abiball_planer/core/managment/stateManagementStudents.dart';
 import 'package:abiball_planer/core/route/cards/cards_overview.dart';
-import 'package:abiball_planer/core/route/cards/ticket_document.dart';
 import 'package:abiball_planer/core/route/email/email_view.dart';
 import 'package:abiball_planer/core/service/email_handler.dart';
 import 'package:abiball_planer/core/service/web_socket_service.dart';
@@ -39,6 +38,7 @@ class MainLayoutState extends State<MainLayout> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       isMaximized = !await WindowManager.instance.isMaximized();
+      RealtimeDataService();
       setState(() {});
     });
     super.initState();

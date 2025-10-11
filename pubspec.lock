@@ -380,18 +380,18 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_charts
-      sha256: cae165bc489d3b77fb095ab974c75fce5ea19aaedf392bb1ba85be1f1c7adc3d
+      sha256: "712a32f528ec0f695254966d4fdaf0d333c393963bc412fa1164dda503d643ac"
       url: "https://pub.dev"
     source: hosted
-    version: "26.1.39"
+    version: "26.1.41+1"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "963e414e06abe520c9d0e039738bc6cbcf8eabf8c5964eb2181a76da1274a942"
+      sha256: "78681c79fe14c338b2985c67ab2863df7cf11541fd6d347be3ba37bb0bcd7d81"
       url: "https://pub.dev"
     source: hosted
-    version: "26.1.39"
+    version: "26.1.41"
   synchronized:
     dependency: transitive
     description:

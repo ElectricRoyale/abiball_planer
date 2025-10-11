@@ -496,7 +496,7 @@ class _EditDialogLayoutState extends State<EditDialogLayout> {
                   TextButton(
                       onPressed: () {
                         RealtimeDataService()
-                            .getSingleVisitor(widget.personData.conditions);
+                            .getSingleStudent(widget.personData.conditions);
                         closeDialog();
                       },
                       child: const Text('Abrechen')),

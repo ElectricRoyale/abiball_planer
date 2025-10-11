@@ -119,6 +119,6 @@ class TicketDocument {
     payed != null ? this.payed = payed : null;
     this.placeNumber = placeNumber;
     money != null ? this.money = money : null;
-    RealtimeDataService().updateVisitor(getDocumentMap(), conditions);
+    RealtimeDataService().updateStudent(getDocumentMap(), conditions);
   }
 }

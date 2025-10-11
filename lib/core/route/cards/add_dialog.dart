@@ -509,7 +509,7 @@ class _AddDialogLayoutState extends State<AddDialogLayout> {
                               ? allergiesWidget.currentState!.getAllergens
                               : null;
                           RealtimeDataService()
-                              .insertVisitor(personData.getDocumentMap());
+                              .insertStudent(personData.getDocumentMap());
                           closeDialog();
                         }
                       },

@@ -17,7 +17,7 @@ class RealtimeDataService {
 
   BuildContext? context;
 
-  String wsUrl = "ws://192.168.0.131:8000/ws";
+  String wsUrl = "ws://159.65.115.215:8000/ws";
   WebSocket? _channel;
 
   factory RealtimeDataService() => _instance;
@@ -35,7 +35,7 @@ class RealtimeDataService {
       print("socket connection initialized!");
     }
     broadcastNotifications();
-    getVisitors();
+    getStudents();
   }
 
   void broadcastNotifications() {
@@ -46,10 +46,10 @@ class RealtimeDataService {
       Map dataMap = jsonDecode(data.toString());
       if (context != null) {
         switch (dataMap["type"]) {
-          case 'getVisitors':
+          case 'getStudents':
             ManagerProviderStudents.of(context!).addAll(dataMap["args"]);
             break;
-          case 'getSingleVisitor':
+          case 'getSingleStudent':
             ManagerProviderStudents.of(context!)
                 .update(dataMap["args"].first, dataMap["condition"]);
             break;
@@ -175,40 +175,40 @@ class RealtimeDataService {
   }
 
   void _onDisconnected() => initWebSocketConnection().then((value) {
-    getVisitors();
+    getStudents();
   });
 
-  void getVisitors() {
+  void getStudents() {
     if (_channel != null) {
-      _channel!.add(jsonEncode({"method": "getVisitors"}));
+      _channel!.add(jsonEncode({"method": "getStudents"}));
     }
   }
 
-  void getSingleVisitor(Map condition) {
+  void getSingleStudent(Map condition) {
     if (_channel != null) {
       _channel!
-          .add(jsonEncode({"method": "getSingleVisitor", "args": condition}));
+          .add(jsonEncode({"method": "getSingleStudent", "args": condition}));
     }
   }
 
-  void insertVisitor(Map args) {
+  void insertStudent(Map args) {
     if (_channel != null) {
-      _channel!.add(jsonEncode({"method": "addVisitor", "args": args}));
+      _channel!.add(jsonEncode({"method": "addStudent", "args": args}));
     }
   }
 
-  void updateVisitor(Map args, Map condition) {
+  void updateStudent(Map args, Map condition) {
     if (_channel != null) {
       _channel!.add(jsonEncode({
-        "method": "updateVisitor",
+        "method": "updateStudent",
         "args": {"update_data": args, "condition": condition}
       }));
     }
   }
 
-  void deleteVisitor(Map condition) {
+  void deleteStudent(Map condition) {
     if (_channel != null) {
-      _channel!.add(jsonEncode({"method": "deleteVisitor", "args": condition}));
+      _channel!.add(jsonEncode({"method": "deleteStudent", "args": condition}));
     }
   }
 

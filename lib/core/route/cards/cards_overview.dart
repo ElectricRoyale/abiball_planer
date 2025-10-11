@@ -58,7 +58,7 @@ class CardsOverview extends StatelessWidget {
                           child: addDialog(context)))
                   .then((value) => focusNode.requestFocus()),
           const SingleActivator(LogicalKeyboardKey.f5): () =>
-              RealtimeDataService().getVisitors(),
+              RealtimeDataService().getStudents(),
         },
         child: Focus(
           focusNode: focusNode..requestFocus(),
@@ -328,7 +328,7 @@ class CardsOverview extends StatelessWidget {
                                     child: GestureDetector(
                                       onSecondaryTap: () =>
                                           deleteItem(context, layerLink, () {
-                                        RealtimeDataService().deleteVisitor(
+                                        RealtimeDataService().deleteStudent(
                                             ManagerProviderStudents.of(context)
                                                 .viewTickets
                                                 .elementAt(index)
@@ -336,7 +336,7 @@ class CardsOverview extends StatelessWidget {
                                       }),
                                       onLongPress: () =>
                                           deleteItem(context, layerLink, () {
-                                        RealtimeDataService().deleteVisitor(
+                                        RealtimeDataService().deleteStudent(
                                             ManagerProviderStudents.of(context)
                                                 .viewTickets
                                                 .elementAt(index)
@@ -524,7 +524,7 @@ class CardsOverview extends StatelessWidget {
                                                                   .numberOfTickets
                                                           : 0.0;
                                                       RealtimeDataService()
-                                                          .updateVisitor(
+                                                          .updateStudent(
                                                               document
                                                                   .getDocumentMap(),
                                                               document

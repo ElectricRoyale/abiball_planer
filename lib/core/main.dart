@@ -10,7 +10,6 @@ void main() async {
     await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
     await windowManager.show(); //Finally show app window.
   });
-  RealtimeDataService();
   runApp(const MyApp());
 }
 
